@@ -1,0 +1,20 @@
+@import "css/colors.css";
+@import "css/theme.css";
+@import "css/modules.css";
+@import "css/hover.css";
+@import "css/workspace.css";
+
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 14px;
+
+    color: @primary;
+}
+
+window#waybar {
+  background: alpha(@surface, 0.8);
+  margin: 10px 300px;
+  border: 2px solid @outline;
+  border-radius: 18px;
+  padding: 2px;
+}

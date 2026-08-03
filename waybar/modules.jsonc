@@ -1,0 +1,104 @@
+{
+  /* LEFT */
+  "clock": {
+    "format": "{:%I:%M %p • %b %e}",
+    "tooltip-format": "<tt>{calendar}</tt>"
+  },
+  /*"custom/weather": {
+    "exec": "wttrbar --location agoura_hills --custom-indicator '{ICON} {temp_C}°' --hide-conditions --nerd --mph",
+    "return-type": "json",
+    "interval": 3600,
+    "tooltip": true
+  },*/
+  /*"custom/cava": {
+  "exec": "~/.config/waybar/scripts/media.sh",
+  "return-type": "json",
+  "format": "{text}",
+  "tooltip": "{tooltip}",
+
+  "on-click": "playerctl play-pause",
+  "on-click-right": "playerctl next",
+  "on-click-middle": "playerctl previous",
+  "on-click-backwards": "playerctl open",
+
+  "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+",
+  "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
+},*/
+  /* MIDDLE */
+  "custom/idle": {
+    "exec": "~/.config/waybar/scripts/toggle-idle.sh",
+    "return-type": "json",
+    "interval": 60,
+    "signal": 5,
+    "on-click": "~/.config/waybar/scripts/toggle-idle.sh toggle"
+  },
+  "niri/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "active": "≋",
+      "default": "~"
+    }
+  },
+  "network": {
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰖪",
+    "format-disabled": "󰖪",
+    "format-icons": [
+      "󰤯",
+      "󰤟",
+      "󰤢",
+      "󰤥",
+      "󰤨"
+    ],
+    "on-click": "kitty --class float-term -e nmtui",
+    "tooltip-format-disconnected": "No Connection",
+    "tooltip-format-disabled": "Wi-Fi is OFF",
+    "tooltip-format-wifi": "󱄙  {essid} ({signalStrength}%)",
+    "tooltip-format-ethernet": "󰈀  {ifname} (Connected)\n  {bandwidthDownBytes}   {bandwidthUpBytes}",
+    "tooltip-format-linked": "󱘖 {ifname}: No IP Address"
+  },
+  "bluetooth": {
+    "format": "󰂯",
+    "format-connected": "󰂱",
+    "format-disabled": "󰂲",
+    "tooltip-format-disabled": "OFF",
+    "tooltip-format": "ON",
+    "tooltip-format-connected": "󰐻  {num_connections} Connected:\n{device_enumerate}",
+    "tooltip-format-enumerate-connected-battery": "󰂱  {device_alias} ({device_battery_percentage}%)",
+    "on-click": "blueman-manager",
+    "on-click-right": "rfkill toggle bluetooth"
+  },
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-full": "󰁹 100%",
+    "states": {
+      "warning": 30,
+      "critical": 20
+    },
+    "events": {
+      "on-discharging-warning": "notify-send -u normal 'Low Battery' 'Battery is at 30%'",
+      "on-discharging-critical": "notify-send -u critical 'Low Battery' 'Computer is on life support. Charge it immediately.'"
+    },
+    "format-icons": [
+      "󰁺",
+      "󰁻",
+      "󰁼",
+      "󰁽",
+      "󰁾",
+      "󰁿",
+      "󰂀",
+      "󰂁",
+      "󰂂",
+      "󰁹"
+    ]
+  },
+  "custom/power-profile": {
+    "exec": "~/.config/waybar/scripts/power-profile.sh",
+    "return-type": "json",
+    "interval": 30,
+    "on-click": "~/.config/waybar/scripts/power-profile.sh toggle",
+    "signal": 4
+  }
+}

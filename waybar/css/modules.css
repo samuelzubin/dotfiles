@@ -1,0 +1,56 @@
+#clock {
+  margin-left: 18px;
+  padding: 0px 12px;
+}
+
+#custom-cava {
+  padding-left: 9px;
+  padding-right: 10px;
+}
+
+#custom-idle {
+  padding-left: 10px;
+  padding-right: 3px;
+}
+
+#network {
+  padding-left: 8px;
+  padding-right: 14px;
+  color: @secondary;
+}
+
+#bluetooth {
+  padding: 0px 10px;
+  color: @secondary;
+}
+
+#battery {
+  color: @secondary;
+}
+
+#battery.warning {
+  color: @on_error_container;
+}
+
+#battery.critical {
+  color: @error;
+}
+
+#battery.charging {
+  color: @surface_tint;
+}
+
+#custom-power-profile {
+  color: @secondary;
+  padding: 0px 10px 0px 12px;
+  margin-right: 2px;
+  border-radius: 0px 14px 14px 0px;
+}
+
+#custom-power-profile.powersave {
+    color: #a6e3a1;
+}
+
+#custom-power-profile.performance {
+    color: #f38ba8;
+}

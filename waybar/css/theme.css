@@ -1,0 +1,10 @@
+#clock,
+#network,
+#custom-idle,
+#bluetooth,
+#battery,
+#custom-power-profile {
+  margin: 2px 0px;
+  padding: 4px 8px;
+  transition: all 350ms ease;
+}

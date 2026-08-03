@@ -1,0 +1,8 @@
+#clock:hover,
+#custom-idle:hover,
+#network:hover,
+#bluetooth:hover,
+#battery:hover,
+#custom-power-profile:hover {
+  background: alpha(@outline_variant, 0.4); 
+}

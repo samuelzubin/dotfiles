@@ -1,0 +1,13 @@
+* {
+    background:     #121318;
+    on-background:  #e3e2e9;
+
+    surface:        #121318;
+    on-surface:     #e3e2e9;
+
+    primary:        #b2c5ff;
+    on-primary:     #182e60;
+
+    secondary:      #c0c6dd;
+    error:          #ffb4ab;
+}

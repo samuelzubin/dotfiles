@@ -1,0 +1,22 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 36,
+  "margin": "10 200 0 200",
+  "include": [
+    "~/.config/waybar/modules.jsonc"
+  ],
+  "modules-left": [
+    "clock"
+  ],
+  "modules-center": [
+    "custom/idle",
+    "niri/workspaces"
+  ],
+  "modules-right": [
+    "network",
+    "bluetooth",
+    "battery",
+    "custom/power-profile"
+  ]
+}
