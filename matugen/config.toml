@@ -1,7 +1,7 @@
 [config]
 [templates.swaync]
 input_path = "~/.config/matugen/templates/swaync-colors.css"
-output_path = "/home/samuel/.config/swaync/colors.css"
+output_path = "~/.config/swaync/colors.css"
 post_hook = "swaync-client -rs"
 
 [templates.waybar]

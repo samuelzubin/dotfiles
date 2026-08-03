@@ -10,6 +10,7 @@ spawn-at-startup "hypridle"
 spawn-at-startup "waybar"
 spawn-at-startup "swaync"
 //spawn-at-startup "flatpak" "run" "io.github.alainm23.planify"
+//spawn-sh-at-startup "sleep 3 && discord --start-minimized"
 
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
