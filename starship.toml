@@ -1,0 +1,53 @@
+format = "$os$username$directory$git_branch$git_status$character"
+right_format = "$cmd_duration"
+
+
+# LEFT SIDE
+
+[os]
+format = "[$symbol ]($style)"
+style = "bold blue"
+disabled = false
+
+[os.symbols]
+Fedora = "  "
+
+# USERNAME
+# [username]
+# show_always = true
+# style_user = "bold #FFE74C"
+# style_root = "bold red"
+# format = "[$user]($style) "
+
+[directory]
+style = "bold #81F4E1"
+truncation_length = 8
+truncation_symbol = '…/'
+truncate_to_repo = false
+
+[git_branch]
+format = '[$symbol$branch(:$remote_branch)]($style) '
+symbol = ' '
+
+[git_status]
+ahead = '⇡${count}'
+diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+behind = '⇣${count}'
+
+[character]
+success_symbol = '[❯](bold #A19BFF) '
+error_symbol = '[❯](bold red) '
+
+# Show if sudo privileges are cached - add to format if using
+# [sudo]
+# format = '$symbol'
+# symbol = '  '
+# disabled = false
+
+
+# RIGHT SIDE
+
+[cmd_duration]
+min_time = 500
+format = 'underwent [$duration](bold yellow)'
+
