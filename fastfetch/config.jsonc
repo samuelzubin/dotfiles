@@ -2,17 +2,18 @@
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
 
   "logo": {
-    "source": "Fedora",
+    "source": "auto",
+    "type": "small",
     "color": {
-      "1": "#182e60",
-      "2": "#b2c5ff"
+      "1": "#404659",
+      "2": "#e1bbdd"
     }
   },
 
   "display": {
     "separator": "  ",
     "key": {
-      "width": 14
+      "width": 13
     },
     "color": {
       "separator": "#b2c5ff"
@@ -21,49 +22,47 @@
 
   "modules": [
     "break",
-
     {
       "type": "title",
+      "key": "󰋜 user",
       "color": {
         "user": "#b2c5ff",
         "at": "#e3e2e9",
         "host": "#b2c5ff"
-      }
+      },
+     "keyColor": "#b2c5ff" 
     },
-
-    "break",
-
     {
       "type": "os",
-      "key": " System",
-      "keyColor": "#b2c5ff"
+      "key": "󰌽 os",
+      "keyColor": "#b2c5ff",
+      "format": "{name}"
     },
     {
       "type": "kernel",
-      "key": "󰌽 Kernel",
-      "keyColor": "#b2c5ff"
-    },
-    {
-      "type": "packages",
-      "key": "󰏖 Packages",
-      "keyColor": "#b2c5ff"
+      "key": "󰒓 kernel",
+      "keyColor": "#b2c5ff",
+      "format": "{release}"
     },
 
     "break",
 
     {
       "type": "wm",
-      "key": "󱂬 WM",
+      "key": "󱂬 wm",
+      "format": "niri",
       "keyColor": "#b2c5ff"
     },
     {
       "type": "shell",
-      "key": " Shell",
+      "key": " shell",
+      "format": "bash",
       "keyColor": "#b2c5ff"
     },
     {
       "type": "terminal",
-      "key": " Terminal",
+      "key": " terminal",
+      "format": "kitty",
       "keyColor": "#b2c5ff"
     },
 
@@ -71,37 +70,39 @@
 
     {
       "type": "cpu",
-      "key": "󰍛 CPU",
+      "key": "󰍛 cpu",
       "keyColor": "#b2c5ff"
     },
     {
       "type": "memory",
-      "key": " Memory",
+      "key": " memory",
       "keyColor": "#b2c5ff"
     },
     {
       "type": "disk",
-      "key": "󰋊 Disk",
-      "keyColor": "#b2c5ff"
+      "key": "󰋊 disk",
+      "keyColor": "#b2c5ff",
+      "folders": "/",
+      "format": "{size-used} / {size-total} ({size-percentage})"
     },
 
     "break",
 
     {
       "type": "terminalfont",
-      "key": " Font",
-      "keyColor": "#b2c5ff"
+      "key": " font",
+      "keyColor": "#b2c5ff",
+      "format": "{name}"
     },
     {
       "type": "uptime",
-      "key": "󰥔 Uptime",
+      "key": "󰥔 uptime",
       "keyColor": "#b2c5ff"
     },
-
-    "break",
-
     {
       "type": "colors",
+      "key": "󰏘 colors",
+      "keyColor": "#b2c5ff",
       "symbol": "circle"
     }
   ]
