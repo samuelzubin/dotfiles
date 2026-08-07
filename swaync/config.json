@@ -21,7 +21,7 @@
   "timeout-critical": 0,
   "fit-to-screen": false,
   "relative-timestamps": true,
-  "control-center-width": 380,
+  "control-center-width": 350,
   "control-center-height": 798,
   "notification-window-width": 380,
   "keyboard-shortcuts": true,
@@ -43,7 +43,7 @@
   ],
   "widget-config": {
     "mpris": {
-      "image-size": 50,
+      "image-size": 60,
       "image-radius": 50
     },
     "volume": {

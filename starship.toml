@@ -1,16 +1,14 @@
-format = "$os$username$directory$git_branch$git_status$character"
-right_format = "$cmd_duration"
-
+format = "  $username$directory$git_branch$git_status$character"
 
 # LEFT SIDE
 
-[os]
-format = "[$symbol ]($style)"
-style = "bold blue"
-disabled = false
-
-[os.symbols]
-Fedora = "  "
+# [os]
+# format = "[$symbol ]($style)"
+# style = "bold blue"
+# disabled = false
+#
+# [os.symbols]
+# Fedora = "  "
 
 # USERNAME
 # [username]
@@ -43,11 +41,3 @@ error_symbol = '[❯](bold red) '
 # format = '$symbol'
 # symbol = '  '
 # disabled = false
-
-
-# RIGHT SIDE
-
-[cmd_duration]
-min_time = 500
-format = 'underwent [$duration](bold yellow)'
-

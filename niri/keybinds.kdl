@@ -14,12 +14,12 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
-    Mod+D hotkey-overlay-title="Run an Application: rofi" { spawn "rofi" "-show" "drun"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
+    Mod+Return hotkey-overlay-title="Open Terminal" { spawn "kitty"; }
+    Mod+D hotkey-overlay-title="App Launcher"       { spawn "rofi" "-show" "drun"; }
+    Super+Alt+L hotkey-overlay-title="Lock Screen"  { spawn "hyprlock"; }
     
     Mod+E { spawn "env" "GSK_RENDERER=gl" "GDK_DISABLE_VULKAN=1" "nautilus" "--new-window"; }
-    Mod+Shift+Q { spawn "wlogout"; }
+    Mod+Shift+Q hotkey-overlay-title="Power Options" { spawn "wlogout"; }
 
     Mod+N { spawn "sh" "-c" "swaync-client -rs && swaync-client -t"; }
     Mod+Shift+W {spawn "wallselect"; }

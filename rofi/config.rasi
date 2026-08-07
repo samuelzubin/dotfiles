@@ -1,106 +1,106 @@
 @import "colors.rasi"
 
 configuration {
-    modes: "window,drun,run,ssh";
-    font: "JetBrainsMono NF 18";
-    drun-display-format: "{name}";
-    show-icons: true;
+  modes: "window,drun,run,ssh";
+  font: "JetBrainsMono NF 18";
+  drun-display-format: "{name}";
+  show-icons: true;
 }
 
 /* ---- WINDOW ---- */
 window {
-    width: 40%;
-    border: 2px;
-    border-radius: 18px;
-    border-color: transparent;
-    background-color: #00000070;
-    location: center;
-    anchor: center;
-    padding: 30px;
+  width: 40%;
+  border: 2px;
+  border-radius: 18px;
+  border-color: transparent;
+  background-color: #00000070;
+  location: center;
+  anchor: center;
+  padding: 30px;
 }
 
 /* ---- MAIN ---- */
 mainbox {
-    spacing: 15px;
-    background-color: transparent;
+  spacing: 15px;
+  background-color: transparent;
 }
 
 /* ---- INPUT ---- */
 inputbar {
-    background-color: transparent;
+  background-color: transparent;
 
-    border: 2px;
-    border-radius: 14px;
-    border-color: @primary;
+  border: 2px;
+  border-radius: 14px;
+  border-color: @primary;
 
-    padding: 12px;
-    spacing: 10px;
+  padding: 12px;
+  spacing: 10px;
 
-    children: [ entry ];
+  children: [ entry ];
 }
 
 entry {
-    background-color: transparent;
-    text-color: @on-background;
-    placeholder: "Search";
-    placeholder-color: @on-background;
+  background-color: transparent;
+  text-color: @on-background;
+  placeholder: "Search";
+  placeholder-color: @on-background;
 }
 
 /* ---- LIST ---- */
 listview {
-    background-color: transparent;
+  background-color: transparent;
 
-    lines: 7;
-    columns: 1;
-    spacing: 8px;
-    scrollbar: false;
+  lines: 7;
+  columns: 1;
+  spacing: 8px;
+  scrollbar: false;
 
-    padding: 10px 0px 0px;
+  padding: 10px 0px 0px;
 
-    /* Disables the dashed line between search and apps */
-    border: 0px;
+  /* Disables the dashed line between search and apps */
+  border: 0px;
 }
 
 /* ---- ELEMENTS ---- */
 element normal.normal,
 element alternate.normal {
-    background-color: transparent;
-    text-color: @on-surface;
+  background-color: transparent;
+  text-color: @on-surface;
 }
 
 /* ---- SELECTED STATES ---- */
 element selected.normal {
-    text-color: @primary;
-    background-color: transparent;
+  text-color: @primary;
+  background-color: transparent;
 
-    /* Thin white border box around the active selection */
-    /* border: 2px;
-    border-radius: 12px;
-    border-color: #ffffff; */
+  /* Thin white border box around the active selection */
+  /* border: 2px;
+  border-radius: 12px;
+  border-color: #ffffff; */
 }
 
 element selected.active {
-    text-color: @on-surface;
-    border-color: @on-surface;
+  text-color: @on-surface;
+  border-color: @on-surface;
 }
 
 element selected.urgent {
-    background-color: @error;
-    text-color: @secondary;
+  background-color: @error;
+  text-color: @secondary;
 }
 
 /* ---- ICONS ---- */
 element-icon {
-    margin: 0px 0px 0px 14px;
-    size: 28px;
-    background-color: transparent;
+  margin: 0px 0px 0px 14px;
+  size: 28px;
+  background-color: transparent;
 }
 
 element-text {
-    padding: 4px;
-    background-color: transparent;
-    text-color: inherit;
-    highlight: bold;  /* Affects matching results */
+  padding: 4px;
+  background-color: transparent;
+  text-color: inherit;
+  highlight: bold;  /* Affects matching results */
 }
 
 /* ---- MISC ---- */
@@ -108,13 +108,13 @@ textbox,
 prompt,
 button,
 case-indicator {
-    background-color: transparent;
-    text-color: @on-background;
+  background-color: transparent;
+  text-color: @on-background;
 }
 
 /* ---- SCROLLBAR ---- */
 scrollbar {
-    handle-width: 4px;
-    handle-color: @primary;
-    background-color: transparent;
+  handle-width: 4px;
+  handle-color: @primary;
+  background-color: transparent;
 }

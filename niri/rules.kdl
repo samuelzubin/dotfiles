@@ -5,66 +5,90 @@
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
 window-rule {
-    // This regular expression is intentionally made as specific as possible,
-    // since this is the default config, and we want no false positives.
-    // You can get away with just app-id="wezterm" if you want.
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
+  // This regular expression is intentionally made as specific as possible,
+  // since this is the default config, and we want no false positives.
+  // You can get away with just app-id="wezterm" if you want.
+  match app-id=r#"^org\.wezfurlong\.wezterm$"#
+  default-column-width {}
 }
 
 // Open the Firefox picture-in-picture player as floating by default.
 window-rule {
-    // This app-id regular expression will work for both:
-    // - host Firefox (app-id is "firefox")
-    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    open-floating true
+  // This app-id regular expression will work for both:
+  // - host Firefox (app-id is "firefox")
+  // - Flatpak Firefox (app-id is "org.mozilla.firefox")
+  match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+  open-floating true
 }
 
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
 /-window-rule {
-    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
-    match app-id=r#"^org\.gnome\.World\.Secrets$"#
+  match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+  match app-id=r#"^org\.gnome\.World\.Secrets$"#
 
-    block-out-from "screen-capture"
+  block-out-from "screen-capture"
 
-    // Use this instead if you want them visible on third-party screenshot tools.
-    // block-out-from "screencast"
+  // Use this instead if you want them visible on third-party screenshot tools.
+  // block-out-from "screencast"
 }
 
 // Example: enable rounded corners for all windows.
 // (This example rule is commented out with a "/-" in front.)
 window-rule {
-    geometry-corner-radius 12
-    clip-to-geometry true
+  geometry-corner-radius 12
+  clip-to-geometry true
 }
 
 window-rule {
-    match app-id="brave-browser"
-    match app-id="discord"
-    match app-id="Spotify"
-    match app-id="steam"
-    match app-id="io.github.alainm23.planify"
-    match app-id="spotify-player"
-    open-maximized true
+  match app-id="brave-browser"
+  match app-id="discord"
+  match app-id="Spotify"
+  match app-id="steam"
+  match app-id="io.github.alainm23.planify"
+  match app-id="spotify-player"
+  match app-id="firefox"
+  open-maximized true
 }
 
 window-rule {
-    match app-id="^kitty$"
-    match app-id="spotify-player"
-    background-effect {
-        blur true
-    }
+  match app-id="^kitty$"
+  match app-id="spotify-player"
+  match app-id="vesktop"
+  background-effect {
+    blur true
+  }
+}
+
+window-rule {
+  match app-id="^float-term$"
+  open-floating true
+  background-effect {
+    blur true
+    xray false
+  }
+
+  default-window-height { proportion 0.9; }
+  default-column-width { proportion 0.45; }
 }
 
 layer-rule {
-    match namespace="^rofi$"
-    geometry-corner-radius 18
-    background-effect {
-        blur true
-        xray false
-    }
+  match namespace="^rofi$"
+  match namespace="waybar"
+  geometry-corner-radius 18
+  background-effect {
+    blur true
+    xray false
+  }
+}
+
+layer-rule {
+  match namespace="swayosd"
+  geometry-corner-radius 32
+  background-effect {
+    blur true
+    xray false
+  }
 }
 
 layer-rule {
@@ -76,6 +100,6 @@ layer-rule {
 }
 
 layer-rule {
-    match namespace="swww"
-    place-within-backdrop true
+  match namespace="swww"
+  place-within-backdrop true
 }

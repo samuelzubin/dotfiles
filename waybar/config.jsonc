@@ -2,7 +2,7 @@
   "layer": "top",
   "position": "top",
   "height": 36,
-  "margin": "10 200 0 200",
+  "margin": "10 150 0 150",
   "include": [
     "~/.config/waybar/modules.jsonc"
   ],
