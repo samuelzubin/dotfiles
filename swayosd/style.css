@@ -1,11 +1,11 @@
 window#osd {
-  background-color: alpha(#121214d0, 0.65);
+  background-color: alpha(#121214d0, 0.55);
   border-radius: 96px;
   padding: 0px 6px;
 }
 
 image {
-  color: #b2c5ff;
+  color: #90d5ad;
   -gtk-icon-transform: scale(0.55);
 }
 
@@ -14,7 +14,7 @@ progressbar {
 }
 
 progressbar progress {
-  background-color: #b2c5ff;
+  background-color: #90d5ad;
   border-radius: 999px;
 }
 

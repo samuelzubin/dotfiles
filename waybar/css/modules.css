@@ -1,6 +1,24 @@
 #clock {
-  margin-left: 10px;
-  padding: 0px 12px;
+  margin-left: 0px;
+  padding: 0px 6px;
+}
+
+#custom-screen-record {
+  margin-left: 14px;
+  padding-left: 5px;
+  padding-right: 2px;
+  border-radius: 2px 0px 0px 2px;
+}
+
+#custom-screen-record.recording {
+  color: @error;
+  animation: pulse-record 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-record {
+  0% { opacity: 1; }
+  50% { opacity: 0.2; }
+  100% { opacity: 1; }
 }
 
 #custom-cava {
