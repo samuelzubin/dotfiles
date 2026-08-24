@@ -76,12 +76,14 @@
     "format": "󰂯",
     "format-connected": "󰂱",
     "format-disabled": "󰂲",
-    "tooltip-format-disabled": "OFF",
+    "format-off": "󰂲",
     "tooltip-format": "ON",
+    "tooltip-format-disabled": "OFF",
+    "tooltip-format-off": "OFF",
     "tooltip-format-connected": "󰐻  {num_connections} Connected:\n{device_enumerate}",
     "tooltip-format-enumerate-connected-battery": "󰂱  {device_alias} ({device_battery_percentage}%)",
     "on-click": "blueman-manager",
-    "on-click-right": "rfkill toggle bluetooth"
+    "on-click-right": "sh -c 'bluetoothctl show | grep -q \"Powered: yes\" && bluetoothctl power off || bluetoothctl power on'"
   },
   "battery": {
     "format": "{icon} {capacity}%",

@@ -48,13 +48,14 @@ window-rule {
   match app-id="io.github.alainm23.planify"
   match app-id="spotify-player"
   match app-id="firefox"
+  match app-id="code"
+  match app-id="md.obsidian.Obsidian"
   open-maximized true
 }
 
 window-rule {
   match app-id="^kitty$"
   match app-id="spotify-player"
-  match app-id="vesktop"
   background-effect {
     blur true
   }
@@ -75,6 +76,7 @@ window-rule {
 layer-rule {
   match namespace="^rofi$"
   match namespace="waybar"
+  match namespace="^swaync-control-center$"
   geometry-corner-radius 18
   background-effect {
     blur true
