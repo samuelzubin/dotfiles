@@ -1,5 +1,12 @@
 @import "colors.css";
 
+/*
+ * Pill/soft-rounded design language shared with swayosd (see
+ * ~/.config/swayosd/style.css): large radii, soft alpha backgrounds, pill
+ * sliders. Colors always come from colors.css tokens (not hardcoded hex like
+ * swayosd) so this keeps auto-updating with Matugen.
+ */
+
 * {
   font-family: "JetBrainsMono Nerd Font";
   font-size: 15px;
@@ -12,16 +19,17 @@
 /* CONTROL CENTER */
 .control-center {
   background-color: alpha(@surface, 0.65);
-  border-radius: 18px;
-  padding: 8px;
+  border-radius: 28px;
+  padding: 12px;
 }
 
 /* BUTTONS */
 .widget-buttons-grid button {
     background: @surface_container;
-    border-radius: 12px;
+    border-radius: 20px;
     padding: 14px;
-    border: 1px solid @outline_variant; 
+    margin: 2px;
+    border: 1px solid @outline_variant;
     color: @on_surface_variant;
     font-size: 1.3rem;
     transition: all 0.2s ease;
@@ -35,6 +43,10 @@
     border-color: @primary;
 }
 
+.widget-buttons-grid button:checked {
+    box-shadow: 0 0 0 3px alpha(@primary, 0.35);
+}
+
 .widget-buttons-grid button:hover {
     filter: brightness(1.15);
 }
@@ -44,8 +56,16 @@
   margin: 8px;
 }
 
+.widget-dnd switch {
+  background-color: @surface_container_highest;
+}
+
 .widget-dnd switch:checked {
   background-color: @primary;
+}
+
+.widget-dnd switch slider {
+  background-color: @on_surface;
 }
 
 .widget-dnd switch:checked slider {
@@ -56,9 +76,9 @@
 .notification {
   background-color: @primary;
   color: @on_surface;
-  border-radius: 12px;
-  border: 3px solid alpha(@surface_tint, 0.5);
-  padding: 10px;
+  border-radius: 24px;
+  border: 1px solid alpha(@surface_tint, 0.5);
+  padding: 12px;
 }
 
 .notification.low,
@@ -74,12 +94,13 @@
 .notification-action > button {
   background-color: @surface_container_highest;
   color: @on_surface;
-  border-radius: 8px;
+  border-radius: 999px;
 }
 
 .close-button {
   background-color: @surface_container_highest;
   color: @on_surface;
+  border-radius: 999px;
 }
 
 .close-button:hover {
@@ -87,11 +108,21 @@
   color: @on_error;
 }
 
-/* SLIDERS */
+/* SLIDERS (volume, backlight) */
+scale trough {
+  min-height: 8px;
+  border-radius: 999px;
+  background-color: @surface_container_highest;
+}
+
 scale trough highlight {
   background-color: @primary;
+  border-radius: 999px;
 }
 
 scale trough slider {
-  background-color: @primary;
+  background-color: @on_surface;
+  border-radius: 999px;
+  min-width: 14px;
+  min-height: 14px;
 }

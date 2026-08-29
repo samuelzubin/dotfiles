@@ -71,14 +71,14 @@
         {
           "label": " ",
           "type": "toggle",
-          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'",
-          "update-command": "sh -c '[[ $(nmcli radio wifi) == \"enabled\" ]] && echo true || echo false'"
+          "command": "[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off",
+          "update-command": "[[ $(nmcli radio wifi) == enabled ]] && echo true || echo false"
         },
         {
           "label": "󰂯",
           "type": "toggle",
-          "command": "sh -c '[ \"$SWAYNC_TOGGLE_STATE\" = \"true\" ] && bluetoothctl power on || bluetoothctl power off'",
-          "update-command": "sh -c 'bluetoothctl show | grep -q \"Powered: yes\" && echo true || echo false'"
+          "command": "[[ $SWAYNC_TOGGLE_STATE == true ]] && bluetoothctl power on || bluetoothctl power off",
+          "update-command": "bluetoothctl show | grep -q 'Powered: yes' && echo true || echo false"
         }
       ]
     }

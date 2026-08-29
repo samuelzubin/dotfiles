@@ -39,12 +39,12 @@
   "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
 },*/
   /* MIDDLE */
-  "custom/idle": {
-    "exec": "~/.config/waybar/scripts/toggle-idle.sh",
+  "custom/atlas": {
+    "exec": "~/.config/waybar/scripts/atlas-status",
     "return-type": "json",
-    "interval": 60,
-    "signal": 5,
-    "on-click": "~/.config/waybar/scripts/toggle-idle.sh toggle"
+    "interval": "once",
+    "signal": 8,
+    "exec-on-event": true
   },
   "niri/workspaces": {
     "format": "{icon}",
@@ -53,6 +53,15 @@
       "default": "~"
     }
   },
+  "custom/idle": {
+    "exec": "~/.config/waybar/scripts/toggle-idle.sh",
+    "return-type": "json",
+    "interval": 60,
+    "signal": 5,
+    "on-click": "~/.config/waybar/scripts/toggle-idle.sh toggle"
+  },
+
+  /* RIGHT */
   "network": {
     "format-wifi": "{icon}",
     "format-ethernet": "󰈀",

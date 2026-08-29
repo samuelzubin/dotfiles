@@ -11,8 +11,9 @@
     "clock"
   ],
   "modules-center": [
-    "custom/idle",
-    "niri/workspaces"
+    "custom/atlas",
+    "niri/workspaces",
+    "custom/idle"
   ],
   "modules-right": [
     "network",

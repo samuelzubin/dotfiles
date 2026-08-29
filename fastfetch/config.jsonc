@@ -5,8 +5,8 @@
     "source": "auto",
     "type": "small",
     "color": {
-      "1": "#444559",
-      "2": "#e7b9d5"
+      "1": "#3a4857",
+      "2": "#d4bee6"
     }
   },
 
@@ -16,7 +16,7 @@
       "width": 13
     },
     "color": {
-      "separator": "#bdc2ff"
+      "separator": "#9dcbfb"
     }
   },
 
@@ -26,22 +26,22 @@
       "type": "title",
       "key": "󰋜 user",
       "color": {
-        "user": "#bdc2ff",
-        "at": "#e4e1e9",
-        "host": "#bdc2ff"
+        "user": "#9dcbfb",
+        "at": "#e0e2e8",
+        "host": "#9dcbfb"
       },
-     "keyColor": "#bdc2ff" 
+     "keyColor": "#9dcbfb" 
     },
     {
       "type": "os",
       "key": "󰌽 os",
-      "keyColor": "#bdc2ff",
+      "keyColor": "#9dcbfb",
       "format": "{name}"
     },
     {
       "type": "kernel",
       "key": "󰒓 kernel",
-      "keyColor": "#bdc2ff",
+      "keyColor": "#9dcbfb",
       "format": "{release}"
     },
 
@@ -51,19 +51,19 @@
       "type": "wm",
       "key": "󱂬 wm",
       "format": "niri",
-      "keyColor": "#bdc2ff"
+      "keyColor": "#9dcbfb"
     },
     {
       "type": "shell",
       "key": " shell",
       "format": "bash",
-      "keyColor": "#bdc2ff"
+      "keyColor": "#9dcbfb"
     },
     {
       "type": "terminal",
       "key": " terminal",
       "format": "kitty",
-      "keyColor": "#bdc2ff"
+      "keyColor": "#9dcbfb"
     },
 
     "break",
@@ -71,17 +71,17 @@
     {
       "type": "cpu",
       "key": "󰍛 cpu",
-      "keyColor": "#bdc2ff"
+      "keyColor": "#9dcbfb"
     },
     {
       "type": "memory",
       "key": " memory",
-      "keyColor": "#bdc2ff"
+      "keyColor": "#9dcbfb"
     },
     {
       "type": "disk",
       "key": "󰋊 disk",
-      "keyColor": "#bdc2ff",
+      "keyColor": "#9dcbfb",
       "folders": "/",
       "format": "{size-used} / {size-total} ({size-percentage})"
     },
@@ -91,18 +91,18 @@
     {
       "type": "terminalfont",
       "key": " font",
-      "keyColor": "#bdc2ff",
+      "keyColor": "#9dcbfb",
       "format": "{name}"
     },
     {
       "type": "uptime",
       "key": "󰥔 uptime",
-      "keyColor": "#bdc2ff"
+      "keyColor": "#9dcbfb"
     },
     {
       "type": "colors",
       "key": "󰏘 colors",
-      "keyColor": "#bdc2ff",
+      "keyColor": "#9dcbfb",
       "symbol": "circle"
     }
   ]

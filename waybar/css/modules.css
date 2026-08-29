@@ -31,6 +31,66 @@
   padding-right: 3px;
 }
 
+#custom-atlas {
+    padding: 2px 14px 2px 10px;
+    margin: 2px 4px;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+#custom-atlas.offline {
+    color: @outline;
+    opacity: 0.35;
+}
+
+#custom-atlas.waiting {
+    color: @outline;
+    animation: atlas-breathe 4s ease-in-out infinite;
+}
+
+#custom-atlas.listening {
+    color: @primary;
+    animation: atlas-pulse 1.2s ease-in-out infinite;
+}
+
+#custom-atlas.thinking {
+    color: @tertiary;
+    animation: atlas-pulse 1.5s ease-in-out infinite;
+}
+
+#custom-atlas.speaking {
+    color: @secondary;
+    animation: atlas-pulse 1s ease-in-out infinite;
+}
+
+@keyframes atlas-pulse {
+    0% {
+        opacity: 0.45;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.45;
+    }
+}
+
+@keyframes atlas-breathe {
+    0% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 0.85;
+    }
+
+    100% {
+        opacity: 0.5;
+    }
+}
+
 #network {
   padding-left: 8px;
   padding-right: 14px;

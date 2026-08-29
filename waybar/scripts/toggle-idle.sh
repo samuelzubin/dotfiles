@@ -6,8 +6,8 @@ PATTERN="systemd-inhibit.*Waybar idle inhibitor"
 # Lock / Timestamp file to track remaining time
 EXPIRE_FILE="/tmp/idle-inhibitor-expire"
 
-# Duration in seconds (2 hours = 7200 seconds)
-DURATION=7200
+# Duration in seconds (3 hours)
+DURATION=10800
 
 # Toggle logic
 if [ "$1" = "toggle" ]; then
