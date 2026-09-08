@@ -65,7 +65,7 @@
   "network": {
     "format-wifi": "{icon}",
     "format-ethernet": "󰈀",
-    "format-disconnected": "󰖪",
+    "format-disconnected": "󰤫",
     "format-disabled": "󰖪",
     "format-icons": [
       "󰤯",
@@ -89,8 +89,8 @@
     "tooltip-format": "ON",
     "tooltip-format-disabled": "OFF",
     "tooltip-format-off": "OFF",
-    "tooltip-format-connected": "󰐻  {num_connections} Connected:\n{device_enumerate}",
-    "tooltip-format-enumerate-connected-battery": "󰂱  {device_alias} ({device_battery_percentage}%)",
+    "tooltip-format-connected": "󰂱 {num_connections} Connected:\n{device_enumerate}",
+    "tooltip-format-enumerate-connected-battery": "({device_battery_percentage}%) {device_alias} ",
     "on-click": "blueman-manager",
     "on-click-right": "sh -c 'bluetoothctl show | grep -q \"Powered: yes\" && bluetoothctl power off || bluetoothctl power on'"
   },

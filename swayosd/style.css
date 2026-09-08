@@ -5,7 +5,7 @@ window#osd {
 }
 
 image {
-  color: #9dcbfb;
+  color: #88d0ec;
   -gtk-icon-transform: scale(0.55);
 }
 
@@ -14,7 +14,7 @@ progressbar {
 }
 
 progressbar progress {
-  background-color: #9dcbfb;
+  background-color: #88d0ec;
   border-radius: 999px;
 }
 

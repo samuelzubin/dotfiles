@@ -32,6 +32,16 @@
   "hide-on-action": true,
   "text-empty": "No Notifications",
   "script-fail-notify": true,
+  "scripts": {
+    "battery-id-tracker-summary": {
+      "summary": "(?i)batter",
+      "exec": "echo $SWAYNC_ID >> $XDG_RUNTIME_DIR/swaync-battery-ids"
+    },
+    "battery-id-tracker-body": {
+      "body": "(?i)batter",
+      "exec": "echo $SWAYNC_ID >> $XDG_RUNTIME_DIR/swaync-battery-ids"
+    }
+  },
   "widgets": [
     "buttons-grid",
     "mpris",

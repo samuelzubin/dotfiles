@@ -5,6 +5,7 @@ configuration {
   font: "JetBrainsMono NF 18";
   drun-display-format: "{name}";
   show-icons: true;
+  window-display-format: "{n}";
 }
 
 /* ---- WINDOW ---- */
