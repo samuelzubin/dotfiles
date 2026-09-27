@@ -36,7 +36,7 @@ window-rule {
 // Example: enable rounded corners for all windows.
 // (This example rule is commented out with a "/-" in front.)
 window-rule {
-  geometry-corner-radius 12
+  geometry-corner-radius 16
   clip-to-geometry true
 }
 
@@ -47,18 +47,30 @@ window-rule {
   match app-id="steam"
   match app-id="io.github.alainm23.planify"
   match app-id="spotify-player"
+  match app-id="^spotify-player-bg$"
   match app-id="firefox"
   match app-id="code"
   match app-id="md.obsidian.Obsidian"
+  // Editors Atlas opens for a project (atlas/tools/projects.py spawns
+  // kitty with this title). Matched on title, not a custom app-id, so
+  // these windows still match the ^kitty$ blur rule below — and so
+  // ordinary terminals keep the default half-width column.
+  match app-id="^kitty$" title="^atlas project$"
   open-maximized true
 }
 
 window-rule {
   match app-id="^kitty$"
   match app-id="spotify-player"
+  match app-id="^spotify-player-bg$"
   background-effect {
     blur true
   }
+}
+
+window-rule {
+  match app-id="^spotify-player-bg$"
+  open-focused false
 }
 
 window-rule {
@@ -69,8 +81,16 @@ window-rule {
     xray false
   }
 
-  default-window-height { proportion 0.9; }
-  default-column-width { proportion 0.45; }
+  default-window-height { proportion 0.90; }
+  default-column-width  { proportion 0.45; }
+}
+
+window-rule {
+  match app-id="org.gnome.Calculator"
+  open-floating true
+  default-window-height { proportion 0.65; }
+  default-column-width  { proportion 0.18; }
+  default-floating-position x=1140 y=185
 }
 
 layer-rule {

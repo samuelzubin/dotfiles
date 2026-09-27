@@ -4,7 +4,7 @@ binds {
     Mod+Return  hotkey-overlay-title="Open Terminal" { spawn "kitty"; }
     Mod+D       hotkey-overlay-title="App Launcher"  { spawn "rofi" "-show" "drun"; }
     Super+Alt+L hotkey-overlay-title="Lock Screen"   { spawn "hyprlock"; }
-    Mod+Shift+Q hotkey-overlay-title="Power Menu" { spawn "wlogout"; }
+    Mod+Shift+Q hotkey-overlay-title="Power Menu" repeat=false { spawn "wlogout"; }
     Mod+N { spawn "sh" "-c" "swaync-client -rs && swaync-client -t"; }
     Mod+E { spawn "env" "GSK_RENDERER=gl" "GDK_DISABLE_VULKAN=1" "nautilus" "--new-window"; }
     Mod+Shift+W {spawn "wallselect"; }
@@ -28,7 +28,8 @@ binds {
     "Shift+XF86AudioLowerVolume" allow-when-locked=true { spawn "swayosd-client" "--input-volume" "lower" "--max-volume" "100"; }
 
     // Media
-    XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play"; }
+    XF86AudioPause       allow-when-locked=true { spawn-sh "playerctl pause"; }
     XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
     XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
     XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
@@ -154,10 +155,10 @@ binds {
     // Mod+Shift+Space { switch-layout "prev"; }
 
     // Screenshot/screen-record
-    Print { screenshot show-pointer=false; }
+    Print      { screenshot show-pointer=false; }
     Ctrl+Print { screenshot-screen show-pointer=false; }
-    Alt+Print { screenshot-window show-pointer=false; }
-    Mod+Print { spawn "~/.local/bin/screen-record.sh"; }
+    Alt+Print  { screenshot-window show-pointer=false; }
+    Mod+Print  { spawn "~/.local/bin/screen-record.sh"; }
 
     // Misc.
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }

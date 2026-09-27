@@ -10,7 +10,7 @@ if [ "$1" = "toggle" ]; then
     NEXT="balanced"
     ;;
   *balanced*)
-    NEXT="throughput-performance"
+    NEXT="accelerator-performance"
     ;;
   *)
     NEXT="powersave"
