@@ -1,13 +1,13 @@
 * {
-    background:     #121318;
-    on-background:  #e3e2e9;
+    background:     #111318;
+    on-background:  #e1e2e9;
 
-    surface:        #121318;
-    on-surface:     #e3e2e9;
+    surface:        #111318;
+    on-surface:     #e1e2e9;
 
-    primary:        #b2c5ff;
-    on-primary:     #182e60;
+    primary:        #a4c9fe;
+    on-primary:     #00315d;
 
-    secondary:      #c0c6dd;
+    secondary:      #bcc7db;
     error:          #ffb4ab;
 }

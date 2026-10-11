@@ -6,6 +6,7 @@ binds {
     Super+Alt+L hotkey-overlay-title="Lock Screen"   { spawn "hyprlock"; }
     Mod+Shift+Q hotkey-overlay-title="Power Menu" repeat=false { spawn "wlogout"; }
     Mod+N { spawn "sh" "-c" "swaync-client -rs && swaync-client -t"; }
+    Mod+Shift+N { spawn "~/.config/swaync/scripts/quick-note.sh"; }
     Mod+E { spawn "env" "GSK_RENDERER=gl" "GDK_DISABLE_VULKAN=1" "nautilus" "--new-window"; }
     Mod+Shift+W {spawn "wallselect"; }
     Mod+Shift+E { quit; }

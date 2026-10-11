@@ -10,6 +10,7 @@ spawn-at-startup "hypridle"
 spawn-at-startup "waybar"
 spawn-at-startup "swaync"
 spawn-at-startup "/home/samuel/.config/swaync/scripts/battery-ac-dismiss.sh"
+spawn-at-startup "/home/samuel/.config/swaync/scripts/button-labels.sh"
 spawn-at-startup "flatpak" "run" "md.obsidian.Obsidian"
 //spawn-sh-at-startup "sleep 3 && discord --start-minimized"
 
