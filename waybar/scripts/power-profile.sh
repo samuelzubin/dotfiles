@@ -47,4 +47,4 @@ case "$CURRENT" in
 esac
 
 # Output JSON for Waybar
-echo "{\"text\": \"$ICON \", \"tooltip\": \"$LABEL\", \"class\": \"$CLASS\"}"
+echo "{\"text\": \"$ICON\", \"tooltip\": \"$LABEL\", \"class\": \"$CLASS\"}"

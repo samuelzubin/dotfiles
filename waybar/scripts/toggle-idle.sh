@@ -70,4 +70,4 @@ else
   CLASS="disabled"
 fi
 
-echo "{\"text\":\"$ICON \",\"tooltip\":\"$LABEL\",\"class\":\"$CLASS\"}"
+echo "{\"text\":\"$ICON\",\"tooltip\":\"$LABEL\",\"class\":\"$CLASS\"}"

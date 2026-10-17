@@ -11,10 +11,20 @@
     color: @primary;
 }
 
+/* The bar itself is invisible; every module draws its own rounded block
+   (see css/theme.css). */
 window#waybar {
-  background: alpha(@surface, 0.8);
-  margin: 10px 300px;
-  border: 2px solid @outline;
-  border-radius: 18px;
-  padding: 2px;
+  background: transparent;
+  border: none;
+}
+
+tooltip {
+  background: alpha(@surface_container, 0.95);
+  border: 1px solid alpha(@outline, 0.45);
+  border-radius: 14px;
+}
+
+tooltip label {
+  color: @on_surface;
+  padding: 2px 4px;
 }

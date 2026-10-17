@@ -1,26 +1,35 @@
+#workspaces {
+  padding: 0px 6px;
+}
+
 #workspaces button {
-  margin: 3px 0px;
-  padding: 0 7px;
-  opacity: 0.35;
+  margin: 3px 2px;
+  padding: 0px 8px;
+  border-radius: 12px;
+  opacity: 0.4;
   transition: all 350ms ease;
 }
 
+#workspaces button label {
+  font-size: 12px;
+  color: @secondary;
+}
+
 #workspaces button:hover {
-  opacity: 0.7;
-  background: @outline_variant; 
+  opacity: 0.8;
+  background: alpha(@outline_variant, 0.6);
 }
 
 #workspaces button.active {
   opacity: 1;
-  font-size: 24px;
-  font-weight: bold;
-  margin: 4px 2px;
-  text-shadow:
-    0 0 6px alpha(@tertiary, 0.8),
-    0 0 14px alpha(@tertiary, 0.35);
+  padding: 0px 14px;
+  background: alpha(@primary, 0.22);
 }
 
-#workspaces button label {
-  font-size: 18px;
-  color: @tertiary;
+#workspaces button.active label {
+  color: @primary;
+  font-size: 14px;
+  text-shadow:
+    0 0 6px alpha(@primary, 0.7),
+    0 0 14px alpha(@primary, 0.3);
 }

@@ -1,7 +1,7 @@
 {
   /* LEFT */
   "custom/screen-record": {
-    "exec": "~/.local/bin/screen-record.sh status",
+    "exec": "~/.config/waybar/scripts/screen-record-status",
     "return-type": "json",
     "interval": "once",
     "signal": 6,
@@ -9,6 +9,7 @@
   },
   "clock": {
     "format": "{:%I:%M %p}",
+    "format-alt": "{:%a, %b %d}",
     "tooltip-format": "<tt>{calendar}</tt>",
     "calendar": {
       "mode": "month",
@@ -17,6 +18,14 @@
         "today": "<span color='#ff6699'><b>{}</b></span>"
       }
     }
+  },
+  "custom/now-playing": {
+    "exec": "~/.config/waybar/scripts/now-playing",
+    "return-type": "json",
+    "restart-interval": 5,
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl next",
+    "on-click-middle": "playerctl previous"
   },
   /*"custom/weather": {
     "exec": "wttrbar --location agoura_hills --custom-indicator '{ICON} {temp_C}°' --hide-conditions --nerd --mph",
@@ -49,8 +58,8 @@
   "niri/workspaces": {
     "format": "{icon}",
     "format-icons": {
-      "active": "≋",
-      "default": "~"
+      "active": "●",
+      "default": "●"
     }
   },
   "custom/idle": {

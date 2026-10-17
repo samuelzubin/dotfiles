@@ -95,7 +95,6 @@ window-rule {
 
 layer-rule {
   match namespace="^rofi$"
-  match namespace="waybar"
   match namespace="^swaync-control-center$"
   geometry-corner-radius 28
   background-effect {
