@@ -1,109 +1,95 @@
 {
-  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
-
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
-    "source": "auto",
-    "type": "small",
-    "color": {
-      "1": "#404659",
-      "2": "#e1bbdd"
-    }
+    "source": "fedora_small",
+    "padding": { "top": 3 },
+    "color": { "1": "#c6bfff", "2": "#e4dfff" }
   },
-
   "display": {
-    "separator": "  ",
-    "key": {
-      "width": 13
-    },
-    "color": {
-      "separator": "#b2c5ff"
-    }
+    "separator": "",
+    "size": { "binaryPrefix": "jedec", "ndigits": 1 },
+    "color": "38;2;228;223;255",
+    "percent": { "type": 1 },
+    "constants": [
+      "\u001b[38;2;198;191;255m",   /* $1: icon color (matugen primary) */
+      "\u001b[38;2;228;223;255m",   /* $2: key + value text (matugen primary_fixed, a lighter tint of $1) */
+      "\u001b[38;2;146;143;153m"    /* $3: box border (matugen outline) */
+    ]
   },
-
   "modules": [
     "break",
     {
-      "type": "title",
-      "key": "󰋜 user",
-      "color": {
-        "user": "#b2c5ff",
-        "at": "#e3e2e9",
-        "host": "#b2c5ff"
-      },
-     "keyColor": "#b2c5ff" 
+      "type": "custom",
+      "key": "{$3}╭──────────────────────────────────────────────╮"
+    },
+    {
+      "type": "command",
+      "shell": "bash",
+      "param": "-c",
+      "text": "printf '%34s' \"$USER@$(uname -n)\"",
+      "key": "{$3}│ {$1}󰋜{$2} user    ",
+      "format": "{$1}{result}{$3} │"
     },
     {
       "type": "os",
-      "key": "󰌽 os",
-      "keyColor": "#b2c5ff",
-      "format": "{name}"
+      "key": "{$3}│ {$1}󰌽{$2} os      ",
+      "format": "{$2}{name>34}{$3} │"
     },
     {
       "type": "kernel",
-      "key": "󰒓 kernel",
-      "keyColor": "#b2c5ff",
-      "format": "{release}"
+      "key": "{$3}│ {$1}󰒓{$2} kernel  ",
+      "format": "{$2}{release>34}{$3} │"
     },
-
-    "break",
-
     {
       "type": "wm",
-      "key": "󱂬 wm",
-      "format": "niri",
-      "keyColor": "#b2c5ff"
+      "key": "{$3}│ {$1}󱂬{$2} wm      ",
+      "format": "{$2}{pretty-name>34}{$3} │"
     },
     {
       "type": "shell",
-      "key": " shell",
-      "format": "bash",
-      "keyColor": "#b2c5ff"
+      "key": "{$3}│ {$1}{$2} shell   ",
+      "format": "{$2}{process-name>34}{$3} │"
     },
     {
       "type": "terminal",
-      "key": " terminal",
-      "format": "kitty",
-      "keyColor": "#b2c5ff"
+      "key": "{$3}│ {$1}{$2} terminal",
+      "format": "{$2}                             kitty{$3} │"
     },
-
-    "break",
-
     {
       "type": "cpu",
-      "key": "󰍛 cpu",
-      "keyColor": "#b2c5ff"
+      "key": "{$3}│ {$1}󰍛{$2} cpu     ",
+      "format": "{$2}{name>34}{$3} │"
     },
     {
       "type": "memory",
-      "key": " memory",
-      "keyColor": "#b2c5ff"
+      "key": "{$3}│ {$1}{$2} memory  ",
+      "format": "           {$2}{used>7} / {total>7} ({percentage>3}){$3} │"
     },
     {
       "type": "disk",
-      "key": "󰋊 disk",
-      "keyColor": "#b2c5ff",
       "folders": "/",
-      "format": "{size-used} / {size-total} ({size-percentage})"
+      "key": "{$3}│ {$1}󰋊{$2} disk    ",
+      "format": "         {$2}{size-used>8} / {size-total>8} ({size-percentage>3}){$3} │"
     },
-
-    "break",
-
     {
       "type": "terminalfont",
-      "key": " font",
-      "keyColor": "#b2c5ff",
-      "format": "{name}"
+      "key": "{$3}│ {$1}{$2} font    ",
+      "format": "{$2}{name>34}{$3} │"
     },
     {
       "type": "uptime",
-      "key": "󰥔 uptime",
-      "keyColor": "#b2c5ff"
+      "key": "{$3}│ {$1}󰥔{$2} uptime  ",
+      "format": "{$2}{formatted>34}{$3} │"
     },
     {
-      "type": "colors",
-      "key": "󰏘 colors",
-      "keyColor": "#b2c5ff",
-      "symbol": "circle"
-    }
+      "type": "custom",
+      "key": "{$3}│ {$1}󰏘{$2} colors  ",
+      "format": "                   \u001b[30m● \u001b[31m● \u001b[32m● \u001b[33m● \u001b[34m● \u001b[35m● \u001b[36m● \u001b[37m●{$3} │"
+    },
+    {
+      "type": "custom",
+      "key": "{$3}╰──────────────────────────────────────────────╯"
+    },
+    "break"
   ]
 }
