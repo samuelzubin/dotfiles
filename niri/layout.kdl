@@ -3,8 +3,8 @@
 // https://niri-wm.github.io/niri/Configuration:-Layout
 layout {
   // Set gaps around windows in logical pixels.
-  // Previously gap was 16, changed to 10 because waybar top margin is 10
-  gaps 10
+  // Previously gap was 10, changed to 6 because waybar top margin is 10
+  gaps 6
 
   background-color "transparent"
 

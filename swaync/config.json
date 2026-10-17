@@ -77,7 +77,7 @@
       "buttons-per-row": 2,
       "actions": [
         {
-          "label": "  ZRNET_G2",
+          "label": "  Velocity …",
           "type": "toggle",
           "command": "[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off",
           "update-command": "[[ $(nmcli radio wifi) == enabled ]] && echo true || echo false",
@@ -91,7 +91,7 @@
           "active": false
         },
         {
-          "label": "󰂯  On",
+          "label": "󰋎  Jabra Eli…",
           "type": "toggle",
           "command": "[[ $SWAYNC_TOGGLE_STATE == true ]] && bluetoothctl power on || bluetoothctl power off",
           "update-command": "bluetoothctl show | grep -q 'Powered: yes' && echo true || echo false",
