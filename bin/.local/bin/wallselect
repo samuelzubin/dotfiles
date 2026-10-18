@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+
+# Directory containing your wallpapers
+WALL_DIR="$HOME/Pictures/Wallpapers"
+# Cache directory to store static first frames for hyprlock
+CACHE_DIR="$HOME/.cache/wallpaper_thumbs"
+
+mkdir -p "$CACHE_DIR"
+
+# Ensure wall directory exists
+if [ ! -d "$WALL_DIR" ]; then
+  notify-send "Error" "Wallpaper directory not found: $WALL_DIR"
+  exit 1
+fi
+
+# Store full image paths in an array
+mapfile -t WALLPAPERS < <(find -L "$WALL_DIR" -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.jpeg" -o -iname "*.webp" -o -iname "*.gif" \))
+
+if [ ${#WALLPAPERS[@]} -eq 0 ]; then
+  notify-send "Error" "No wallpapers found in $WALL_DIR"
+  exit 0
+fi
+
+# Prepare Rofi menu entries: display name only (no ext), keep image preview icon
+ROFI_INPUT=""
+for img in "${WALLPAPERS[@]}"; do
+  filename=$(basename "$img")
+  display_name="${filename%.*}" # Strips the extension
+  ROFI_INPUT+="${display_name}\0icon\x1f${img}\n"
+done
+
+# Grid layout overrides with white border selection box
+THEME_OVERRIDE='
+listview { 
+    columns: 3; 
+    lines: 3; 
+    spacing: 15px; 
+}
+element { 
+    orientation: vertical; 
+    padding: 10px; 
+    border-radius: 14px; 
+    children: [ element-icon, element-text ]; 
+}
+element selected.normal {
+    border: 2px;
+    border-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+element-icon { 
+    size: 140px; 
+    horizontal-align: 0.5; 
+    margin: 0px; 
+}
+element-text { 
+    horizontal-align: 0.5; 
+    vertical-align: 0.5; 
+    padding: 6px 0px 0px 0px; 
+}
+'
+
+# Run Rofi with grid theme overrides
+INDEX=$(echo -en "$ROFI_INPUT" | rofi -dmenu -i -p "Select Wallpaper" -format i -theme-str "$THEME_OVERRIDE")
+
+# If a selection was made
+if [ -n "$INDEX" ]; then
+  SELECTED="${WALLPAPERS[$INDEX]}"
+  LOCK_TARGET="$SELECTED"
+
+  # Extract file extension in lowercase
+  EXT="${SELECTED##*.}"
+  EXT_LOWER=$(echo "$EXT" | tr '[:upper:]' '[:lower:]')
+
+  # For GIF and WebP formats, extract frame 0 to PNG for Hyprlock
+  case "$EXT_LOWER" in
+  gif | webp)
+    HASH=$(echo -n "$SELECTED" | md5sum | awk '{print $1}')
+    CACHE_FRAME="$CACHE_DIR/${HASH}.png"
+
+    if [ ! -f "$CACHE_FRAME" ]; then
+      if command -v magick &>/dev/null; then
+        magick "${SELECTED}[0]" "$CACHE_FRAME" &>/dev/null
+      elif command -v ffmpeg &>/dev/null; then
+        ffmpeg -y -i "$SELECTED" -vframes 1 "$CACHE_FRAME" &>/dev/null
+      fi
+    fi
+
+    if [ -f "$CACHE_FRAME" ]; then
+      LOCK_TARGET="$CACHE_FRAME"
+    fi
+    ;;
+  esac
+
+  # 1. Update Wallpaper via swww
+  swww img "$SELECTED" --transition-type grow --transition-pos top-right --transition-step 90
+
+  # 2. Update System Colors via Matugen
+  matugen image "$SELECTED"
+
+  # 3. Update symlinks separately
+  # - current_wallpaper always points to the actual file (animated or static) for swww/niri
+  # - current_lockscreen points to the static PNG frame (or original file if static) for hyprlock
+  ln -sf "$SELECTED" "$HOME/.config/current_wallpaper"
+  ln -sf "$LOCK_TARGET" "$HOME/.config/current_lockscreen"
+
+  # Send desktop notification
+  # notify-send "Theme Updated" "Wallpaper & Hyprlock background set to $(basename "$SELECTED")"
+fi

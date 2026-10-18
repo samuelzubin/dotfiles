@@ -1,0 +1,64 @@
+# Fedora packages. One per line; '#' starts a comment.
+# Derived from the commands that the niri, waybar, rofi, swaync, hypr and nvim
+# configs and scripts actually run, not from what is installed on any one machine.
+
+# --- compositor, session and portals
+niri
+xwayland-satellite
+xdg-desktop-portal-gnome
+xdg-desktop-portal-gtk
+gnome-keyring
+
+# --- shell components launched by niri (autostart / keybinds)
+waybar
+rofi
+wlogout
+SwayNotificationCenter
+matugen
+swayosd              # COPR erikreider/swayosd
+hypridle             # COPR solopasha/hyprland
+hyprlock             # COPR solopasha/hyprland (also ships /etc/pam.d/hyprlock)
+swww                 # COPR solopasha/hyprland
+
+# --- commands used by the bar, rofi menus, swaync buttons and scripts
+brightnessctl
+playerctl
+wf-recorder
+libnotify            # notify-send
+upower
+glib2                # gdbus
+NetworkManager       # nmcli
+nm-connection-editor
+bluez                # bluetoothctl
+blueman              # blueman-manager, pairing agent
+wireplumber          # wpctl
+pipewire
+tuned                # tuned-adm (waybar power profile)
+python3              # swaync button-labels.sh, window-switcher
+wl-clipboard
+
+# --- GTK look (dconf/interface.ini, matugen gtk.css)
+adw-gtk3-theme
+adwaita-sans-fonts
+adwaita-mono-fonts
+
+# --- keybind targets
+kitty
+nautilus             # Mod+E
+
+# --- neovim (LazyVim)
+neovim
+git
+ripgrep
+fd-find
+gcc
+make
+unzip
+tar
+curl
+nodejs22             # mason installs pyright etc. with npm
+nodejs22-npm
+# java-latest-openjdk-headless   # only needed for the LazyVim java extra (jdtls)
+
+# --- tooling for this repo
+stow

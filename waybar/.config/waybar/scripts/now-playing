@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+# Streams the current song as waybar JSON. Runs playerctl in its own process
+# instead of using waybar's built-in mpris module, which segfaults after a
+# SIGUSR2 reload (matugen's post_hook) when the player changes state.
+import json
+import subprocess
+from html import escape
+
+MAX = 22
+FMT = "{{status}}\t{{title}}\t{{artist}}"
+
+
+def emit(obj):
+    print(json.dumps(obj), flush=True)
+
+
+proc = subprocess.Popen(
+    ["playerctl", "--follow", "metadata", "--format", FMT],
+    stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True,
+)
+for line in proc.stdout:
+    parts = line.rstrip("\n").split("\t")
+    if len(parts) < 2 or not parts[1]:
+        emit({"text": "", "class": "stopped"})  # empty text hides the block
+        continue
+    status, title = parts[0], parts[1]
+    artist = parts[2] if len(parts) > 2 else ""
+    short = title if len(title) <= MAX else title[:MAX].rstrip() + "…"
+    icon = "󰎈" if status == "Playing" else "󰏤"
+    emit({
+        "text": f"{icon} {escape(short)}",
+        "tooltip": escape(f"{title}\n{artist}" if artist else title),
+        "class": status.lower(),
+    })

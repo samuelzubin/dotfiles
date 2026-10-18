@@ -1,0 +1,144 @@
+#!/usr/bin/env bash
+# Rofi Wi-Fi picker on top of nmcli. Opened from the waybar network block.
+# Enterprise (802.1X) networks that aren't set up yet are handed off to
+# nm-connection-editor, which exposes EAP method, inner auth, CA cert, domain.
+
+MENU_APP="Wi-Fi"
+source "$(dirname "$0")/rofi-menu.sh"
+
+SIGNAL_ICONS=("󰤯" "󰤟" "󰤢" "󰤥" "󰤨")
+LOCK="󰌾"
+
+signal_icon() {
+  local i=$(($1 / 21))
+  ((i > 4)) && i=4
+  printf '%s' "${SIGNAL_ICONS[$i]}"
+}
+
+# Saved wifi profile name for an SSID, if any.
+saved_profile() {
+  nmcli -t -e no -f NAME,TYPE con show | while IFS= read -r line; do
+    name=${line%:*}
+    [[ ${line##*:} == 802-11-wireless ]] || continue
+    [[ "$(nmcli -g 802-11-wireless.ssid con show "$name" 2>/dev/null)" == "$1" ]] && { printf '%s' "$name"; return; }
+  done
+}
+
+connect_secured() {
+  local ssid=$1 security=$2 key_mgmt=wpa-psk pw
+  [[ $security == *WPA3* && $security != *WPA2* ]] && key_mgmt=sae
+
+  pw=$(rofi -dmenu -password -p "Password" -theme-str "$THEME listview { lines: 0; }" \
+    -mesg "Password for $ssid" </dev/null) || return
+  [[ -z $pw ]] && return
+
+  nmcli con add type wifi con-name "$ssid" ssid "$ssid" \
+    wifi-sec.key-mgmt "$key_mgmt" >/dev/null || { notify "Couldn't create profile for $ssid"; return; }
+  # Password goes through a file descriptor so it never shows up in argv/ps.
+  if nmcli --wait 30 con up id "$ssid" passwd-file <(printf '802-11-wireless-security.psk:%s\n' "$pw") >/dev/null 2>&1; then
+    notify "Connected to $ssid"
+  else
+    nmcli con delete id "$ssid" >/dev/null 2>&1
+    notify -u normal "Couldn't connect to $ssid" "Wrong password, or the network rejected the connection."
+  fi
+}
+
+connect() {
+  local ssid=$1 security=$2 profile
+  profile=$(saved_profile "$ssid")
+
+  if [[ -n $profile ]]; then
+    notify "Connecting to $ssid…"
+    if nmcli --wait 30 con up id "$profile" >/dev/null 2>&1; then
+      notify "Connected to $ssid"
+    else
+      notify -u normal "Couldn't connect to $ssid" "Right-click the Wi-Fi block to check its settings."
+    fi
+  elif [[ $security == *802.1X* ]]; then
+    notify "$ssid is an enterprise network" "Add it in the editor: + → Wi-Fi, SSID \"$ssid\", Security: WPA & WPA2 Enterprise."
+    nm-connection-editor --create --type=802-11-wireless &
+  elif [[ -z $security || $security == "--" ]]; then
+    nmcli --wait 30 dev wifi connect "$ssid" >/dev/null 2>&1 \
+      && notify "Connected to $ssid" || notify -u normal "Couldn't connect to $ssid"
+  elif [[ $security == *WEP* ]]; then
+    nm-connection-editor --create --type=802-11-wireless &
+  else
+    connect_secured "$ssid" "$security"
+  fi
+}
+
+active_menu() {
+  local ssid=$1 profile choice
+  profile=$(saved_profile "$ssid")
+  choice=$(printf '%s\n' "󰖪  Disconnect" "󰆴  Forget network" "󰒓  Edit settings" | menu "$ssid") || return
+  case $choice in
+    0) nmcli con down id "$profile" >/dev/null && notify "Disconnected from $ssid" ;;
+    1) nmcli con delete id "$profile" >/dev/null && notify "Forgot $ssid" ;;
+    2) nm-connection-editor --edit="$(nmcli -g connection.uuid con show "$profile")" & ;;
+  esac
+}
+
+main() {
+  local radio entries=() ssids=() secs=() active=() seen=" " line inuse sig sec ssid
+
+  radio=$(nmcli radio wifi)
+  if [[ $radio != enabled ]]; then
+    choice=$(printf '%s\n' "󰖩  Turn Wi-Fi on" "󰒓  Advanced settings…" | menu "Wi-Fi") || return
+    case $choice in
+      0) nmcli radio wifi on && notify "Wi-Fi on" ;;
+      1) nm-connection-editor & ;;
+    esac
+    return
+  fi
+
+  # -e no: SSID is the last field, so colons inside it can't break parsing.
+  # Results come sorted by signal, so the first hit per SSID is the strongest.
+  while IFS= read -r line; do
+    inuse=${line%%:*}; line=${line#*:}
+    sig=${line%%:*};   line=${line#*:}
+    sec=${line%%:*};   ssid=${line#*:}
+    [[ -z $ssid ]] && continue
+    if [[ $inuse == "*" ]]; then
+      active=("$ssid" "$sig" "$sec")
+      continue
+    fi
+    [[ $seen == *" $ssid "* ]] && continue
+    seen+="$ssid "
+    ssids+=("$ssid"); secs+=("$sec")
+    lock=""; [[ -n $sec && $sec != "--" ]] && lock="  $LOCK"
+    entries+=("$(signal_icon "$sig")  $ssid$lock")
+  done < <(nmcli -t -e no -f IN-USE,SIGNAL,SECURITY,SSID dev wifi list --rescan no)
+
+  # Connected network first, then the rest, then actions.
+  local rows=() header=0
+  if [[ -n ${active[0]} ]]; then
+    rows+=("$(signal_icon "${active[1]}")  ${active[0]}  󰄬")
+    header=1
+    # Drop the duplicate entry of the active SSID from other APs.
+    for i in "${!ssids[@]}"; do
+      [[ ${ssids[$i]} == "${active[0]}" ]] && unset 'ssids[i]' 'secs[i]' 'entries[i]'
+    done
+    ssids=("${ssids[@]}"); secs=("${secs[@]}"); entries=("${entries[@]}")
+  fi
+  rows+=("${entries[@]}")
+  local n=${#rows[@]}
+  rows+=("󰑐  Rescan" "󰒓  Advanced settings…" "󰖪  Turn Wi-Fi off")
+
+  choice=$(printf '%s\n' "${rows[@]}" | menu "Wi-Fi") || return
+  [[ -z $choice ]] && return
+
+  if ((choice == n)); then
+    nmcli dev wifi rescan >/dev/null 2>&1; sleep 2; main
+  elif ((choice == n + 1)); then
+    nm-connection-editor &
+  elif ((choice == n + 2)); then
+    nmcli radio wifi off && notify "Wi-Fi off"
+  elif ((header && choice == 0)); then
+    active_menu "${active[0]}"
+  else
+    i=$((choice - header))
+    connect "${ssids[$i]}" "${secs[$i]}"
+  fi
+}
+
+main

@@ -1,0 +1,141 @@
+#!/usr/bin/env bash
+# Rofi Bluetooth menu on top of bluetoothctl. Opened from the waybar
+# bluetooth block. Pairing prompts (passkeys) come from blueman-applet's agent.
+
+MENU_APP="Bluetooth"
+source "$(dirname "$0")/rofi-menu.sh"
+
+SCAN_SECONDS=8
+
+
+device_icon() {
+  case $1 in
+    audio-headset | audio-headphones) printf '󰋋' ;;
+    audio-card | audio-speakers) printf '󰓃' ;;
+    input-mouse) printf '󰍽' ;;
+    input-keyboard) printf '󰌌' ;;
+    input-gaming) printf '󰊗' ;;
+    phone) printf '󰏲' ;;
+    computer) printf '󰟀' ;;
+    *) printf '󰂯' ;;
+  esac
+}
+
+# Prints "icon|connected|battery" for a MAC.
+device_info() {
+  local info icon connected battery
+  info=$(bluetoothctl info "$1")
+  icon=$(sed -n 's/^\s*Icon: //p' <<<"$info")
+  connected=$(sed -n 's/^\s*Connected: //p' <<<"$info")
+  battery=$(sed -n 's/^\s*Battery Percentage: .*(\([0-9]*\))/\1/p' <<<"$info")
+  printf '%s|%s|%s' "$icon" "$connected" "$battery"
+}
+
+# "Device MAC Name" lines -> parallel arrays, connected devices first.
+list_devices() {
+  macs=(); names=(); rows=(); conn=()
+  local line mac name icon connected battery extra
+  local -a c_macs c_names c_rows p_macs p_names p_rows
+  while IFS= read -r line; do
+    [[ $line == Device\ * ]] || continue
+    mac=${line#Device }; name=${mac#* }; mac=${mac%% *}
+    IFS='|' read -r icon connected battery <<<"$(device_info "$mac")"
+    if [[ $connected == yes ]]; then
+      extra="  󰄬"; [[ -n $battery ]] && extra="  $battery%  󰄬"
+      c_macs+=("$mac"); c_names+=("$name"); c_rows+=("$(device_icon "$icon")  $name$extra")
+    else
+      p_macs+=("$mac"); p_names+=("$name"); p_rows+=("$(device_icon "$icon")  $name")
+    fi
+  done < <(bluetoothctl devices "${1:-Paired}")
+  macs=("${c_macs[@]}" "${p_macs[@]}")
+  names=("${c_names[@]}" "${p_names[@]}")
+  rows=("${c_rows[@]}" "${p_rows[@]}")
+  for _ in "${c_macs[@]}"; do conn+=(yes); done
+  for _ in "${p_macs[@]}"; do conn+=(no); done
+}
+
+connect_device() {
+  notify "Connecting to $2…"
+  if bluetoothctl --timeout 15 connect "$1" | grep -q "Connection successful"; then
+    notify "Connected to $2"
+  else
+    notify -u normal "Couldn't connect to $2" "Make sure it's on and in range."
+  fi
+}
+
+device_menu() {
+  local mac=$1 name=$2 choice
+  choice=$(printf '%s\n' "󰂲  Disconnect" "󰆴  Remove device" | menu "$name") || return
+  case $choice in
+    0) bluetoothctl disconnect "$mac" >/dev/null && notify "Disconnected $name" ;;
+    1) bluetoothctl remove "$mac" >/dev/null && notify "Removed $name" ;;
+  esac
+}
+
+# Discover new devices, then pair + trust + connect the chosen one.
+scan_menu() {
+  local choice line mac name icon
+  notify "Scanning for devices…" "Put your device in pairing mode."
+  bluetoothctl --timeout "$SCAN_SECONDS" scan on >/dev/null 2>&1
+
+  # Discovered = all known devices minus paired ones; skip unnamed ones
+  # (bluetoothctl shows those as the MAC with dashes).
+  local paired; paired=$(bluetoothctl devices Paired)
+  local -a new_macs=() new_names=() new_rows=()
+  while IFS= read -r line; do
+    mac=${line#Device }; name=${mac#* }; mac=${mac%% *}
+    grep -qF "$mac" <<<"$paired" && continue
+    [[ $name == "${mac//:/-}" ]] && continue
+    IFS='|' read -r icon _ _ <<<"$(device_info "$mac")"
+    new_macs+=("$mac"); new_names+=("$name"); new_rows+=("$(device_icon "$icon")  $name")
+  done < <(bluetoothctl devices)
+
+  if ((${#new_macs[@]} == 0)); then
+    notify "No new devices found" "Check that it's in pairing mode, then scan again."
+    return
+  fi
+
+  choice=$(printf '%s\n' "${new_rows[@]}" | menu "Pair") || return
+  [[ -z $choice ]] && return
+  mac=${new_macs[$choice]}; name=${new_names[$choice]}
+
+  notify "Pairing with $name…"
+  if bluetoothctl --timeout 30 pair "$mac" | grep -q "Pairing successful"; then
+    bluetoothctl trust "$mac" >/dev/null
+    connect_device "$mac" "$name"
+  else
+    notify -u normal "Couldn't pair with $name" "Try again, or use Blueman (Advanced…)."
+  fi
+}
+
+main() {
+  local choice
+  if ! bluetoothctl show | grep -q "Powered: yes"; then
+    choice=$(printf '%s\n' "󰂯  Turn Bluetooth on" "󰒓  Advanced…" | menu "Bluetooth") || return
+    case $choice in
+      0) bluetoothctl power on >/dev/null && notify "Bluetooth on" ;;
+      1) blueman-manager & ;;
+    esac
+    return
+  fi
+
+  list_devices Paired
+  local n=${#rows[@]}
+  choice=$(printf '%s\n' "${rows[@]}" "󰂰  Pair new device…" "󰒓  Advanced…" "󰂲  Turn Bluetooth off" \
+    | menu "Bluetooth") || return
+  [[ -z $choice ]] && return
+
+  if ((choice == n)); then
+    scan_menu
+  elif ((choice == n + 1)); then
+    blueman-manager &
+  elif ((choice == n + 2)); then
+    bluetoothctl power off >/dev/null && notify "Bluetooth off"
+  elif [[ ${conn[$choice]} == yes ]]; then
+    device_menu "${macs[$choice]}" "${names[$choice]}"
+  else
+    connect_device "${macs[$choice]}" "${names[$choice]}"
+  fi
+}
+
+main

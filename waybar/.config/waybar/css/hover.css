@@ -1,0 +1,11 @@
+#custom-screen-record:hover,
+#clock:hover,
+#custom-now-playing:hover,
+#custom-idle:hover,
+#network:hover,
+#bluetooth:hover,
+#battery:hover,
+#custom-power-profile:hover {
+  background: alpha(@surface_container_highest, 0.92);
+  border-color: alpha(@primary, 0.55);
+}

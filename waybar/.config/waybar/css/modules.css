@@ -1,0 +1,98 @@
+/* LEFT */
+#clock {
+  color: @primary_fixed;
+  font-weight: bold;
+}
+
+/* Only visible while recording: a small pulsing red dot. */
+#custom-screen-record {
+  padding: 0px 11px;
+  font-size: 12px;
+}
+
+#custom-screen-record.recording {
+  color: @error;
+  border-color: alpha(@error, 0.5);
+  animation: pulse-record 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-record {
+  0% { color: @error; }
+  50% { color: alpha(@error, 0.2); }
+  100% { color: @error; }
+}
+
+/* Now playing: compact, hidden when no player is running. */
+#custom-now-playing {
+  color: @tertiary;
+  font-size: 13px;
+  padding: 0px 12px;
+}
+
+#custom-now-playing.paused {
+  color: @outline;
+}
+
+/* RIGHT */
+#network {
+  color: @primary;
+}
+
+#network.disconnected,
+#network.disabled {
+  color: @outline;
+}
+
+#bluetooth {
+  color: @secondary;
+}
+
+#bluetooth.off,
+#bluetooth.disabled {
+  color: @outline;
+}
+
+#battery {
+  color: @tertiary;
+}
+
+#battery.charging {
+  color: #a6e3a1;
+}
+
+#battery.warning:not(.charging) {
+  color: @on_error_container;
+  background: alpha(@error_container, 0.55);
+}
+
+#battery.critical:not(.charging) {
+  color: @error;
+  border-color: alpha(@error, 0.6);
+}
+
+#custom-power-profile {
+  color: @secondary;
+}
+
+#custom-power-profile.powersave {
+  color: #a6e3a1;
+}
+
+#custom-power-profile.balanced {
+  color: @primary;
+}
+
+#custom-power-profile.performance {
+  color: @error;
+}
+
+/* Always-on (idle inhibitor): filled block when active, dim when off. */
+#custom-idle.disabled {
+  color: @outline;
+}
+
+#custom-idle.enabled {
+  color: @tertiary_fixed;
+  background: alpha(@tertiary_container, 0.8);
+  border-color: alpha(@tertiary, 0.6);
+}

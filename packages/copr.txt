@@ -1,0 +1,3 @@
+# COPR repos, one per line (owner/project). Enabled with `dnf copr enable`.
+erikreider/swayosd
+solopasha/hyprland

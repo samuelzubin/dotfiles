@@ -1,0 +1,24 @@
+// ASUS ROG Zephyrus G14 (AMD iGPU + NVIDIA dGPU). Stowed by `install.sh --host g14`.
+// Merged into the main config after misc.kdl (environment sections merge).
+
+environment {
+  // Keep apps on the AMD iGPU so the NVIDIA dGPU can runtime-suspend (battery).
+  // eDP-1 and HDMI-A-1 are both wired to the AMD GPU.
+  // To run something on the NVIDIA GPU use: switcherooctl launch -g 1 <cmd>
+  // (or set the vars below to their old nvidia values for that command).
+  __GLX_VENDOR_LIBRARY_NAME "mesa"
+  __EGL_VENDOR_LIBRARY_FILENAMES "/usr/share/glvnd/egl_vendor.d/50_mesa.json"
+  VK_LOADER_DRIVERS_DISABLE "*nvidia*"
+  LIBVA_DRIVER_NAME "radeonsi"
+  // previous (always-nvidia) setting:
+  // __GLX_VENDOR_LIBRARY_NAME "nvidia"
+  // LIBVA_DRIVER_NAME "nvidia"
+}
+
+debug {
+  // Don't open the NVIDIA dGPU (so it can runtime-suspend and save battery).
+  // Side effect: the USB-C DisplayPort output (wired to the dGPU) is unavailable.
+  // Built-in panel and HDMI are on the AMD GPU and are unaffected.
+  // Delete this block to get USB-C DP back.
+  ignore-drm-device "/dev/dri/by-path/pci-0000:01:00.0-card"
+}

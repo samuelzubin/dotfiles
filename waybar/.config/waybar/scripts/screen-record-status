@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Wraps ~/.local/bin/screen-record.sh status so the block only exists while
+# recording (empty text hides a waybar custom module).
+if pgrep -x wf-recorder >/dev/null; then
+  printf '{"text":"●","class":"recording","tooltip":"Recording in progress (click to stop)"}\n'
+else
+  printf '{"text":"","class":"stopped","tooltip":""}\n'
+fi

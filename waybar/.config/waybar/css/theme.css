@@ -1,0 +1,45 @@
+/* Shared look for every block: one soft rounded pill per module. */
+#custom-screen-record,
+#clock,
+#custom-now-playing,
+#custom-idle,
+#workspaces,
+#network,
+#bluetooth,
+#battery,
+#custom-power-profile {
+  background: alpha(@surface_container, 0.68);
+  border: 1px solid alpha(@outline, 0.35);
+  border-radius: 16px;
+  margin: 3px 3px;
+  padding: 0px 14px;
+  min-height: 28px;
+  transition: all 350ms ease;
+}
+
+/* Icon-only blocks: same box so glyphs sit centered and line up. */
+#network,
+#bluetooth,
+#custom-power-profile,
+#custom-idle {
+  padding: 0px;
+  min-width: 36px;
+}
+
+/* Nerd Font glyphs carry uneven side bearings; nudge each one back to the
+   optical center. Extra right padding is taken out of min-width so every
+   icon block stays 36px wide. Values measured from screenshots. */
+#network {
+  padding-right: 6px;
+  min-width: 30px;
+}
+
+#custom-power-profile {
+  padding-right: 4px;
+  min-width: 32px;
+}
+
+#bluetooth {
+  padding-right: 2px;
+  min-width: 34px;
+}
