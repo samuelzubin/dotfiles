@@ -1,22 +1,11 @@
-/* Theme for the niri window switcher (scripts/window-switcher, Mod+Tab).
-   The app launcher keeps using config.rasi.
-
-   Built from the rest of the desktop:
-   - panel + search box: same as config.rasi (dark glass, 18px, 2px primary input)
-   - cards: same as waybar blocks (translucent surface, thin outline, 16px)
-   - selected card: niri's focus ring (2px primary, 16px window corners)
-   The script sets columns/width to fit the number of open windows. */
 @import "colors.rasi"
 
 configuration {
   font: "JetBrainsMono NF 12";
   show-icons: true;
-  /* Fallback for apps whose .desktop icon isn't in hicolor. */
   icon-theme: "breeze-dark";
-  /* Tab / Shift+Tab / arrows step through the cards. */
   kb-element-next: "Tab,Right";
   kb-element-prev: "ISO_Left_Tab,Left";
-  /* Left/Right drive the cards, so drop them from text-cursor movement. */
   kb-move-char-back: "Control+b";
   kb-move-char-forward: "Control+f";
 }
@@ -40,7 +29,6 @@ mainbox {
   children: [ "inputbar", "listview" ];
 }
 
-/* ---- SEARCH (title + count live inside the bar, like a waybar block) ---- */
 inputbar {
   spacing: 10px;
   padding: 10px 14px;
@@ -76,7 +64,6 @@ textbox-count-suffix {
   content: "open";
 }
 
-/* ---- CARDS ---- */
 listview {
   lines: 1;
   spacing: 10px;
@@ -104,7 +91,6 @@ element alternate.normal {
   text-color: @on-surface;
 }
 
-/* niri focus ring */
 element selected.normal {
   border: 2px;
   border-color: @primary;

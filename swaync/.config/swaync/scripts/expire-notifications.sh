@@ -1,9 +1,5 @@
 #!/bin/bash
 # Closes control-center notifications older than MAX_AGE (default 24h).
-# Run hourly by systemd/swaync-expire.timer; it does nothing between runs.
-# Ages come from the log notification-hook.sh writes. A notification that is
-# replaced (same id) counts from its latest update. Records from an earlier
-# swaync process are dropped, since ids restart when swaync does.
 
 MAX_AGE="${SWAYNC_EXPIRE_SECS:-86400}"
 RT="${XDG_RUNTIME_DIR:-/tmp}"

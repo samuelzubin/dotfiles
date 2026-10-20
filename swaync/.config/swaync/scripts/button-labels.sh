@@ -1,23 +1,4 @@
 #!/bin/bash
-# Keeps the Wi-Fi / Timer / Bluetooth button labels in config.json in sync with
-# live state. swaync button labels are static, so a change means rewriting
-# config.json and reloading swaync (which also makes the mpris widget redraw).
-# To keep that to the moments it is actually visible, and the script near-idle:
-#
-#  - It sleeps (one `sleep` per wake-up, interrupted by signals via `wait`) and
-#    wakes only when something can have changed:
-#      * SIGUSR1 / SIGWINCH, sent by a `swaync-client -s` subscription when the
-#        control center opens / closes;
-#      * SIGUSR2, sent by quick-timer.sh when a timer starts / is cancelled / ends;
-#      * when a timer's label is due to change (once a minute);
-#      * every NET_INTERVAL seconds as a slow Wi-Fi / Bluetooth check.
-#  - Countdown: whole minutes remaining, rounded down so a 30m timer reads "29m"
-#    from the first second (29:59 left): "29m", "1h05m", and "<1m" in the last
-#    minute. That is one config reload a minute (the mpris widget redraws on each).
-#  - A Wi-Fi/Bluetooth change found by the background check is not applied while
-#    the control center is open; one found at open time, or a timer update, is.
-#
-# Toggle buttons' "active" flag is written too, since a reload would reset it.
 
 CONFIG=~/.config/swaync/config.json
 RT="${XDG_RUNTIME_DIR:-/tmp}"
@@ -26,17 +7,12 @@ PID_FILE="$RT/swaync-button-labels.pid"
 MAXLEN=10
 NET_INTERVAL=120
 
-# Single instance (a stale pid file whose pid is gone or reused is ignored).
 if [[ -r $PID_FILE ]]; then
 	old=$(<"$PID_FILE")
 	if [[ -n $old ]] && grep -aq 'button-labels' "/proc/$old/cmdline" 2>/dev/null; then exit 0; fi
 fi
 echo $$ >"$PID_FILE"
 
-
-# Event source: swaync-client -s prints a JSON line whenever swaync's state
-# changes, including "visible". Turn open into SIGUSR1 and close into SIGWINCH.
-# Restarts if swaync does.
 PARENT=$$
 (
 	while true; do
@@ -50,8 +26,6 @@ PARENT=$$
 	done
 ) &
 sub=$!
-# Clean up on TERM/INT/HUP. (Not an EXIT trap: bash also fires that in the
-# command-substitution/background subshells this script spawns.)
 cleanup() {
 	[[ $(<"$PID_FILE") == "$$" ]] && rm -f "$PID_FILE"
 	pkill -P "$sub" 2>/dev/null
@@ -60,17 +34,16 @@ cleanup() {
 }
 trap cleanup TERM INT HUP
 opened=0 kick=0 cc_open=0
-trap 'kick=1' USR2                       # timer state changed; interrupts the nap
-trap 'kick=1 opened=1 cc_open=1' USR1    # control center opened
-trap 'kick=1 cc_open=0' WINCH            # control center closed
+trap 'kick=1' USR2
+trap 'kick=1 opened=1 cc_open=1' USR1
+trap 'kick=1 cc_open=0' WINCH
 nap() {
 	sleep "$1" &
 	local pid=$!
-	((kick)) || wait "$pid" # re-check right before waiting: a signal may have just landed
+	((kick)) || wait "$pid"
 	kill "$pid" 2>/dev/null
 }
 
-# Sets wifi, wifi_on, bt_type, bt_name, bt_on, net_sig.
 refresh_net() {
 	local ssid line mac type
 	ssid=$(nmcli -t -f active,ssid dev wifi 2>/dev/null)
@@ -107,8 +80,6 @@ cc_visible() {
 		--method org.erikreider.swaync.cc.GetVisibility 2>/dev/null) == "(true,)" ]]
 }
 
-# Rewrites labels/active flags. Prints "changed" or "same", then the timer label as written.
-# args: wifi_name wifi_on bt_type bt_name bt_on timer ("" = idle, "R:12:07", "R:1h05m")
 apply() {
 	python3 -I - "$CONFIG" "$MAXLEN" "$@" <<'PY'
 import json, sys

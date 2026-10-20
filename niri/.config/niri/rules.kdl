@@ -1,22 +1,9 @@
-// Window rules let you adjust behavior for individual windows.
-// Find more information on the wiki:
-// https://niri-wm.github.io/niri/Configuration:-Window-Rules
-
-// Work around WezTerm's initial configure bug
-// by setting an empty default-column-width.
 window-rule {
-  // This regular expression is intentionally made as specific as possible,
-  // since this is the default config, and we want no false positives.
-  // You can get away with just app-id="wezterm" if you want.
   match app-id=r#"^org\.wezfurlong\.wezterm$"#
   default-column-width {}
 }
 
-// Open the Firefox picture-in-picture player as floating by default.
 window-rule {
-  // This app-id regular expression will work for both:
-  // - host Firefox (app-id is "firefox")
-  // - Flatpak Firefox (app-id is "org.mozilla.firefox")
   match app-id=r#"firefox$"# title="^Picture-in-Picture$"
   open-floating true
 }
@@ -33,10 +20,8 @@ window-rule {
   // block-out-from "screencast"
 }
 
-// Example: enable rounded corners for all windows.
-// (This example rule is commented out with a "/-" in front.)
 window-rule {
-  geometry-corner-radius 16
+  geometry-corner-radius 18
   clip-to-geometry true
 }
 
@@ -45,11 +30,10 @@ window-rule {
   match app-id="discord"
   match app-id="Spotify"
   match app-id="steam"
-  match app-id="io.github.alainm23.planify"
-  match app-id="spotify-player"
-  match app-id="^spotify-player-bg$"
   match app-id="firefox"
   match app-id="code"
+  match app-id="md.obsidian.Obsidian"
+  match app-id="^kitty$" title="^atlas project$"
   open-maximized true
 }
 

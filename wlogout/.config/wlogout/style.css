@@ -1,72 +1,74 @@
-@import '../waybar/css/colors.css';
+@import url("file:///home/samuel/.config/waybar/css/colors.css");
 
 * {
   background-image: none;
-  font-size: 20px;
-  font-family: "JetBrains Mono NFM";
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 16px;
+  box-shadow: none;
+  text-shadow: none;
 }
 
 window {
-  background-color: alpha(#000000, 0.5);
+  background-color: alpha(@surface_dim, 0.72);
+  animation: scrim-in 240ms cubic-bezier(0.05, 0.7, 0.1, 1);
+}
+
+@keyframes scrim-in {
+  from { background-color: alpha(@surface_dim, 0); }
+  to { background-color: alpha(@surface_dim, 0.72); }
+}
+
+@keyframes button-in {
+  from { opacity: 0; margin-top: 24px; margin-bottom: 0px; }
+  to { opacity: 1; margin-top: 12px; margin-bottom: 12px; }
 }
 
 button {
-  color: @inverse_surface;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 20px;
-  border-color: @inverse_surface;
-  margin: 10px;
+  color: @primary;
+  font-weight: bold;
+  background-color: alpha(@surface_container, 0.68);
+  border: 1px solid alpha(@outline, 0.35);
+  border-radius: 28px;
+  margin: 12px;
   outline-style: none;
-  border-style: solid;
-  border-width: 0px;
   background-repeat: no-repeat;
-  background-position: center;
-  background-size: 20%;
-  box-shadow: none;
-  text-shadow: none;
-  animation: gradient_f 20s ease-in infinite;
+  background-position: center 40%;
+  background-size: 18%;
+  animation: button-in 240ms cubic-bezier(0.05, 0.7, 0.1, 1) backwards;
+  /* short on the way out; hover/focus below is micro on the way in. */
+  transition-property: background-color, border-color, background-size;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
-button:hover,button:focus {
-  background-color: @on_secondary_fixed_variant;
-  background-size: 25%;
-  animation: gradient_f 20s ease-in infinite;
-  transition: all 0.3s cubic-bezier(.55,0.0,.28,1.682);
+button:hover,
+button:focus {
+  background-color: alpha(@surface_container_highest, 0.92);
+  border-color: alpha(@primary, 0.55);
+  background-size: 21%;
+  transition-duration: 120ms;
 }
 
-/* Adjust the size of the icon or content inside the button */
-button span {
-  font-size: 1em; /* Increase the font size */
-}
+#lock      { animation-delay: 0ms; }
+#reboot    { animation-delay: 30ms; }
+#shutdown  { animation-delay: 60ms; }
+#logout    { animation-delay: 90ms; }
+#hibernate { animation-delay: 120ms; }
+#suspend   { animation-delay: 150ms; }
 
+#lock      { color: @primary;       background-image: url("./icons-themed/lock.png"); }
+#reboot    { color: @primary_fixed; background-image: url("./icons-themed/restart.png"); }
+#shutdown  { color: @error;         background-image: url("./icons-themed/power.png"); }
+#logout    { color: @tertiary;      background-image: url("./icons-themed/logout.png"); }
+#suspend   { color: @secondary;     background-image: url("./icons-themed/sleep.png"); }
+#hibernate { color: @secondary;     background-image: url("./icons-themed/hibernate.png"); background-size: 15%; }
 
-#lock {
-  background-image: url("./icons/lock.png");
-  background-position: center 45%;
-}
+#hibernate:hover,
+#hibernate:focus { background-size: 18%; }
 
-#reboot {
-  background-image: url("./icons/restart.png");
-}
-
-#logout {
-  background-image: url("./icons/logout.png");
-}
-
-#shutdown {
-  background-image: url("./icons/power.png");
-}
-
-#hibernate {
-  background-image: url("./icons/hibernate.png");
-  background-position: center 45%;
-  background-size: 17%;
-}
-
-#hibernate:hover, #hibernate:focus {
-  background-size: 22%;
-}
-
-#suspend {
-  background-image: url("./icons/sleep.png");
-}
+#lock:hover, #lock:focus             { border-color: alpha(@primary, 0.6); }
+#reboot:hover, #reboot:focus         { border-color: alpha(@primary_fixed, 0.6); }
+#shutdown:hover, #shutdown:focus     { border-color: alpha(@error, 0.6); }
+#logout:hover, #logout:focus         { border-color: alpha(@tertiary, 0.6); }
+#suspend:hover, #suspend:focus,
+#hibernate:hover, #hibernate:focus   { border-color: alpha(@secondary, 0.6); }

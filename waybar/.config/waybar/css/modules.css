@@ -4,7 +4,7 @@
   font-weight: bold;
 }
 
-/* Only visible while recording: a small pulsing red dot. */
+/* Only visible while recording */
 #custom-screen-record {
   padding: 0px 11px;
   font-size: 12px;
@@ -13,7 +13,7 @@
 #custom-screen-record.recording {
   color: @error;
   border-color: alpha(@error, 0.5);
-  animation: pulse-record 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulse-record 2.4s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
 @keyframes pulse-record {
@@ -22,7 +22,7 @@
   100% { color: @error; }
 }
 
-/* Now playing: compact, hidden when no player is running. */
+/* Currently playing media */
 #custom-now-playing {
   color: @tertiary;
   font-size: 13px;
@@ -31,6 +31,49 @@
 
 #custom-now-playing.paused {
   color: @outline;
+}
+
+/* CENTER */
+#custom-atlas {
+  font-size: 15px;
+}
+
+#custom-atlas.offline {
+  color: alpha(@outline, 0.45);
+}
+
+#custom-atlas.waiting {
+  color: alpha(@outline, 0.7);
+}
+
+#custom-atlas.listening {
+  animation: atlas-pulse-primary 1.2s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+#custom-atlas.thinking {
+  animation: atlas-pulse-tertiary 2.4s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+#custom-atlas.speaking {
+  animation: atlas-pulse-secondary 1.2s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+@keyframes atlas-pulse-primary {
+  0% { color: alpha(@primary, 0.45); }
+  50% { color: @primary; }
+  100% { color: alpha(@primary, 0.45); }
+}
+
+@keyframes atlas-pulse-tertiary {
+  0% { color: alpha(@tertiary, 0.45); }
+  50% { color: @tertiary; }
+  100% { color: alpha(@tertiary, 0.45); }
+}
+
+@keyframes atlas-pulse-secondary {
+  0% { color: alpha(@secondary, 0.45); }
+  50% { color: @secondary; }
+  100% { color: alpha(@secondary, 0.45); }
 }
 
 /* RIGHT */
@@ -68,6 +111,13 @@
 #battery.critical:not(.charging) {
   color: @error;
   border-color: alpha(@error, 0.6);
+  animation: battery-critical 1.2s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+@keyframes battery-critical {
+  0% { color: @error; border-color: alpha(@error, 0.6); }
+  50% { color: alpha(@error, 0.45); border-color: alpha(@error, 0.2); }
+  100% { color: @error; border-color: alpha(@error, 0.6); }
 }
 
 #custom-power-profile {
@@ -86,7 +136,7 @@
   color: @error;
 }
 
-/* Always-on (idle inhibitor): filled block when active, dim when off. */
+/* Always-on toggle */
 #custom-idle.disabled {
   color: @outline;
 }

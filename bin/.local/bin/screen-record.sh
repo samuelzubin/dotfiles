@@ -31,20 +31,13 @@ else
   mkdir -p "$DIR"
   FILE="$DIR/recording-$(date +%F-%H%M%S).mkv"
 
-  # Hardware H.264 encode on an AMD GPU (VA-API via the freeworld Mesa driver),
-  # with zero-copy DMA-BUF capture. Find the amdgpu render node by driver name
+  # Hardware H.264 encode on the AMD iGPU (VA-API via the freeworld Mesa driver),
+  # with zero-copy DMA-BUF capture. Resolve the render node from the PCI address
   # because the renderD number can change; wf-recorder needs the real node path
   # (a by-path symlink makes it disable DMA-BUF and fail).
-  # With no AMD GPU, or if hardware encoding fails to start, fall back to
-  # software (libopenh264).
-  AMD_RENDER=""
-  for node in /sys/class/drm/renderD*; do
-    if [ "$(basename "$(readlink -f "$node/device/driver" 2>/dev/null)")" = amdgpu ]; then
-      AMD_RENDER="/dev/dri/$(basename "$node")"
-      break
-    fi
-  done
-  [ -n "$AMD_RENDER" ] && export LIBVA_DRIVER_NAME=radeonsi
+  # If hardware encoding fails to start, fall back to software (libopenh264).
+  AMD_RENDER="$(readlink -f /dev/dri/by-path/pci-0000:04:00.0-render 2>/dev/null)"
+  export LIBVA_DRIVER_NAME=radeonsi
 
   start_recorder() {
     wf-recorder "$@" -f "$FILE" >>"$LOG" 2>&1 &

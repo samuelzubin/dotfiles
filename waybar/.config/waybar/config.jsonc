@@ -13,6 +13,7 @@
     "custom/screen-record"
   ],
   "modules-center": [
+    "custom/atlas",
     "niri/workspaces"
   ],
   "modules-right": [

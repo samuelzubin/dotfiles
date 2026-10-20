@@ -5,6 +5,10 @@ return {
       dashboard = {
         preset = {
           pick = function(cmd, opts)
+            if cmd == "files" then
+              -- include dotfiles; .git is still excluded by the picker
+              opts = vim.tbl_extend("keep", opts or {}, { hidden = true })
+            end
             return LazyVim.pick(cmd, opts)()
           end,
           header = [[

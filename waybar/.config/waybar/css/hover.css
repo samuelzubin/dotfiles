@@ -2,10 +2,25 @@
 #clock:hover,
 #custom-now-playing:hover,
 #custom-idle:hover,
+#custom-atlas:hover,
 #network:hover,
 #bluetooth:hover,
 #battery:hover,
 #custom-power-profile:hover {
   background: alpha(@surface_container_highest, 0.92);
   border-color: alpha(@primary, 0.55);
+  transition-duration: 150ms;
+}
+
+#custom-screen-record:active,
+#clock:active,
+#custom-now-playing:active,
+#custom-idle:active,
+#custom-atlas:active,
+#network:active,
+#bluetooth:active,
+#battery:active,
+#custom-power-profile:active {
+  background: alpha(@surface_container_high, 0.95);
+  transition-duration: 150ms;
 }

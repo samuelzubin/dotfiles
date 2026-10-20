@@ -11,8 +11,6 @@
     color: @primary;
 }
 
-/* The bar itself is invisible; every module draws its own rounded block
-   (see css/theme.css). */
 window#waybar {
   background: transparent;
   border: none;
@@ -22,6 +20,12 @@ tooltip {
   background: alpha(@surface_container, 0.95);
   border: 1px solid alpha(@outline, 0.45);
   border-radius: 14px;
+  animation: tooltip-in 150ms cubic-bezier(0.05, 0.7, 0.1, 1);
+}
+
+@keyframes tooltip-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 tooltip label {

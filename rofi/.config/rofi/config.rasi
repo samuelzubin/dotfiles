@@ -2,6 +2,7 @@
 
 configuration {
   modes: "window,drun,run,ssh";
+  terminal: "kitty";
   font: "JetBrainsMono NF 18";
   drun-display-format: "{name}";
   show-icons: true;

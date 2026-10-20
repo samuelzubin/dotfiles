@@ -7,7 +7,7 @@ post_hook   = "swaync-client -rs"
 [templates.waybar]
 input_path  = "~/.config/matugen/templates/waybar.css"
 output_path = "~/.config/waybar/css/colors.css"
-post_hook   = 'pkill -SIGUSR2 waybar'
+post_hook   = 'pkill -SIGUSR2 waybar; ~/.config/wlogout/recolor-icons.py'
 
 [templates.niri]
 input_path  = "~/.config/matugen/templates/niri-colors.kdl"
@@ -16,6 +16,10 @@ output_path = "~/.config/niri/colors.kdl"
 [templates.rofi]
 input_path  = "~/.config/matugen/templates/rofi-colors.rasi"
 output_path = "~/.config/rofi/colors.rasi"
+
+[templates.fastfetch]
+input_path  = "~/.config/fastfetch/config.jsonc.template"
+output_path = "~/.config/fastfetch/config.jsonc"
 
 [templates.swayosd]
 input_path  = '~/.config/matugen/templates/swayosd-template.css'
@@ -29,3 +33,7 @@ output_path = "~/.config/gtk-3.0/gtk.css"
 [templates.gtk4]
 input_path  = "~/.config/matugen/templates/gtk-colors.css"
 output_path = "~/.config/gtk-4.0/gtk.css"
+
+[templates.nvim]
+input_path  = "~/.config/matugen/templates/nvim-colors.lua"
+output_path = "~/.config/nvim/lua/niri_palette.lua"

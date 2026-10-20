@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Neovim (kitty)
+GenericName=Text Editor
+Exec=kitty nvim %F
+Icon=nvim
+Terminal=false
+Categories=Utility;TextEditor;
+MimeType=text/plain;text/markdown;application/json;application/x-shellscript;application/toml;application/yaml;text/x-python;text/x-python3;text/x-csrc;text/x-chdr;text/x-c++src;text/x-c++hdr;text/x-java;text/x-lua;text/x-makefile;text/css;text/javascript;text/rust;text/x-cmake;text/x-log;text/x-go;text/x-tex;text/x-patch;

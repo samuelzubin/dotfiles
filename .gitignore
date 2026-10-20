@@ -1,8 +1,6 @@
-# Files matugen generates on each machine (see matugen/.config/matugen/config.toml)
 niri/.config/niri/colors.kdl
 rofi/.config/rofi/colors.rasi
 swaync/.config/swaync/colors.css
 waybar/.config/waybar/css/colors.css
-# Runtime state / editor leftovers
 *.bak*
 __pycache__/

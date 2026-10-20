@@ -1,7 +1,5 @@
 #!/bin/bash
-# Closes tracked battery notifications in swaync as soon as AC power is plugged in.
-# Notification ids are recorded by config.json's "scripts" hooks into
-# $XDG_RUNTIME_DIR/swaync-battery-ids whenever a battery-related notification arrives.
+# Dismisses battery notifications when plugged in
 
 AC_DEVICE=/org/freedesktop/UPower/devices/line_power_AC0
 IDS_FILE="$XDG_RUNTIME_DIR/swaync-battery-ids"

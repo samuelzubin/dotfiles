@@ -3,7 +3,6 @@ Description=Hourly sweep of old swaync notifications
 
 [Timer]
 OnCalendar=hourly
-# Let systemd coalesce the wake-up with other timers.
 AccuracySec=10min
 
 [Install]
