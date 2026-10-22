@@ -5,7 +5,7 @@
 #custom-atlas,
 #workspaces,
 #network,
-#bluetooth,
+#custom-bluetooth,
 #battery,
 #custom-power-profile {
   background: alpha(@surface_container, 0.68);
@@ -21,7 +21,7 @@
 
 #custom-atlas,
 #network,
-#bluetooth,
+#custom-bluetooth,
 #custom-power-profile,
 #custom-idle {
   padding: 0px;
@@ -44,7 +44,7 @@
   min-width: 33px;
 }
 
-#bluetooth {
+#custom-bluetooth {
   padding-right: 2px;
   min-width: 34px;
 }

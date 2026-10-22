@@ -71,16 +71,9 @@
     "tooltip-format-ethernet": "󰈀  {ifname} (Connected)\n  {bandwidthDownBytes}   {bandwidthUpBytes}",
     "tooltip-format-linked": "󱘖 {ifname}: No IP Address"
   },
-  "bluetooth": {
-    "format": "󰂯",
-    "format-connected": "󰂱",
-    "format-disabled": "󰂲",
-    "format-off": "󰂲",
-    "tooltip-format": "ON",
-    "tooltip-format-disabled": "OFF",
-    "tooltip-format-off": "OFF",
-    "tooltip-format-connected": "󰂱 {num_connections} Connected:\n{device_enumerate}",
-    "tooltip-format-enumerate-connected-battery": "({device_battery_percentage}%) {device_alias} ",
+  "custom/bluetooth": {
+    "exec": "~/.config/waybar/scripts/bluetooth-status",
+    "return-type": "json",
     "on-click": "~/.config/waybar/scripts/bluetooth-menu",
     "on-click-right": "sh -c 'bluetoothctl show | grep -q \"Powered: yes\" && bluetoothctl power off || bluetoothctl power on'"
   },

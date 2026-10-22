@@ -56,9 +56,8 @@ list_devices() {
 
 connect_device() {
   notify "Connecting to $2…"
-  if bluetoothctl --timeout 15 connect "$1" | grep -q "Connection successful"; then
-    notify "Connected to $2"
-  else
+  # Success is announced by the system's own connect notification.
+  if ! bluetoothctl --timeout 15 connect "$1" | grep -q "Connection successful"; then
     notify -u normal "Couldn't connect to $2" "Make sure it's on and in range."
   fi
 }

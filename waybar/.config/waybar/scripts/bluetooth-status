@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# Streams bluetooth state as waybar JSON, with the icon of the connected
+# device's type (headphones, speaker, controller...). Waybar's built-in
+# bluetooth module has no device-type placeholder, so this replaces it.
+# Re-emits on BlueZ D-Bus signals instead of polling.
+
+device_icon() {
+  case $1 in
+    audio-headset | audio-headphones) printf '󰋋' ;;
+    audio-card | audio-speakers) printf '󰓃' ;;
+    input-mouse) printf '󰍽' ;;
+    input-keyboard) printf '󰌌' ;;
+    input-gaming) printf '󰊗' ;;
+    phone) printf '󰏲' ;;
+    computer) printf '󰟀' ;;
+    *) printf '󰂱' ;;
+  esac
+}
+
+status() {
+  if ! bluetoothctl show 2>/dev/null | grep -q 'Powered: yes'; then
+    jq -nc '{text: "󰂲", class: "off", tooltip: "OFF"}'
+    return
+  fi
+
+  local line mac alias info icon battery first="" tooltip=""
+  while IFS= read -r line; do
+    [[ $line == Device\ * ]] || continue
+    mac=${line#Device }; alias=${mac#* }; mac=${mac%% *}
+    info=$(bluetoothctl info "$mac")
+    icon=$(device_icon "$(sed -n 's/^\s*Icon: //p' <<<"$info")")
+    battery=$(sed -n 's/^\s*Battery Percentage: .*(\([0-9]*\))/\1/p' <<<"$info")
+    [[ -z $first ]] && first=$icon
+    tooltip+="$icon  $alias${battery:+ ($battery%)}"$'\n'
+  done < <(bluetoothctl devices Connected)
+
+  if [[ -n $first ]]; then
+    jq -nc --arg text "$first" --arg tip "${tooltip%$'\n'}" \
+      '{text: $text, class: "connected", tooltip: $tip}'
+  else
+    jq -nc '{text: "󰂯", class: "on", tooltip: "ON"}'
+  fi
+}
+
+last=""
+refresh() {
+  local out; out=$(status)
+  [[ $out == "$last" ]] || { last=$out; printf '%s\n' "$out"; }
+}
+
+refresh
+dbus-monitor --system "type='signal',sender='org.bluez'" 2>/dev/null |
+  while IFS= read -r _; do
+    # Connecting fires a burst of signals; wait for it to settle.
+    while read -t 0.3 -r _; do :; done
+    refresh
+  done

@@ -86,12 +86,12 @@
   color: @outline;
 }
 
-#bluetooth {
+#custom-bluetooth {
   color: @secondary;
 }
 
-#bluetooth.off,
-#bluetooth.disabled {
+#custom-bluetooth.off,
+#custom-bluetooth.disabled {
   color: @outline;
 }
 

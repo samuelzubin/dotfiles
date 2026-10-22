@@ -4,7 +4,7 @@
 #custom-idle:hover,
 #custom-atlas:hover,
 #network:hover,
-#bluetooth:hover,
+#custom-bluetooth:hover,
 #battery:hover,
 #custom-power-profile:hover {
   background: alpha(@surface_container_highest, 0.92);
@@ -18,7 +18,7 @@
 #custom-idle:active,
 #custom-atlas:active,
 #network:active,
-#bluetooth:active,
+#custom-bluetooth:active,
 #battery:active,
 #custom-power-profile:active {
   background: alpha(@surface_container_high, 0.95);
